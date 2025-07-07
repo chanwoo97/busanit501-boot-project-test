@@ -50,13 +50,13 @@ html 에서 기본 , ctrl + / 로 만  주석 처리 하면,
 <h2>ex4-3, status 변수 이용 , 타임리프 이용해서 반복문 처리하기. </h2>
 <ul>
     <li th:each="str,status : ${list}">
-        status.index  : [[${status.index}]] -- [[${str}]]
+        status.index : [[${status.index}]] -- [[${str}]]
     </li>
 </ul>
 
 <h2>ex5-1, 조건문 if,unless , 타임리프 이용해서 조건문 처리하기. </h2>
 <ul>
-    <li th:each="str , status: ${list}" >
+    <li th:each="str , status: ${list}">
         <span th:if="${status.odd}">
             status.index : [[${status.index}]],
             status.odd : [[${status.odd}]],
@@ -69,5 +69,32 @@ html 에서 기본 , ctrl + / 로 만  주석 처리 하면,
             짝수  [[${str}]]</span>
     </li>
 </ul>
+
+<h2>ex5-2, 삼항연산자 , 타임리프 이용해서 조건문 처리하기. </h2>
+<ul>
+    <li th:each="str , status: ${list}">
+        <span th:text="${status.odd} ? '홀수---'+${str} : '짝수---'+${str}"> </span>
+    </li>
+</ul>
+
+<h2>ex5-3, 스위치 문법 , 타임리프 이용해서 조건문 처리하기. </h2>
+<ul>
+    <li th:each="str , status: ${list}" >
+        <th:block th:switch="${status.index % 3}">
+            <span th:case="0"> index:0  [[${str}]]</span>
+            <span th:case="1"> index:1  [[${str}]]</span>
+            <span th:case="2"> index:2  [[${str}]]</span>
+        </th:block>
+    </li>
+</ul>
+
+<h2>ex6, 링크처리 </h2>
+<a th:href="@{/hello}">연습용 /hello 가기 </a>
+
+<h2>ex6-2, 링크처리, ? 달고, 쿼리스트링으로 데이터 전달 예시 </h2>
+<a th:href="@{/hello(name='이상용',age=30)}">연습용 /hello 가기쿼리스트링 </a>
+
+<h2>ex6-3, 링크처리, ? 달고, 쿼리스트링으로 데이터 전달 예시, 배열로 여러개 전달 </h2>
+<a th:href="@{/hello(types=${ {'이상용1','이상용2'} }, age = 16)}">연습용 /hello 가기쿼리스트링 </a>
 </body>
 </html>
