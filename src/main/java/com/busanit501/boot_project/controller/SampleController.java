@@ -68,5 +68,10 @@ public class SampleController {
         sampleDTO.p3 = "p3 ----";
         model.addAttribute("dto", sampleDTO);
     }
+
+    @GetMapping("/ex/ex3")
+    public void ex3(Model model) {
+        model.addAttribute("list", Arrays.asList("aaa","bbb","ccc","ddd"));
+    }
     
 } //SampleController 닫는 블록
