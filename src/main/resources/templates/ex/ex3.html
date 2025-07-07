@@ -11,5 +11,10 @@
 <div layout:fragment="content">
     <h1>ex3.html 화면 파일입니다.</h1>
 </div>
+<script layout:fragment="script" th:inline="javascript">
+    const list = [[${list}]]
+    console.log("list : " + list)
+</script>
+
 </body>
 </html>
