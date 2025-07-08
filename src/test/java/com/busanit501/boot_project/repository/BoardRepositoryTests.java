@@ -5,7 +5,12 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -72,6 +77,29 @@ public class BoardRepositoryTests {
     public void testDelete() {
         Long bno = 1L;
         boardRepository.deleteById(bno);
+    }
+
+    //5. 페이징 테스트
+    @Test
+    public void testPage() {
+        // 1 페이지에서, bno 기준으로 내림차순.
+        // of(페이지번호(0: 1페이지), 사이즈, 정렬조건)
+        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
+        // JpaRepository 이용해서, 페이징 처리가 된 데이터를 받기.
+        Page<Board> result = boardRepository.findAll(pageable);
+        // 페이징 관련 기본 정보 를 출력가능.
+        // 1) 전체 갯수 2) 전체 페이지 3) 현재 페이지 번호
+        // 4) 보여줄 사이즈 크기 10개,
+        // 5) 디비에서 페이징된 조회될 데이터 10개 - voList 이런 형식으로 표현했음.
+        log.info("전체 갯수 : total count : " + result.getTotalElements());
+        log.info("전체 페이지 : total pages : " + result.getTotalPages());
+        log.info("현재 페이지 번호 : page number  : " + result.getNumber());
+        log.info("보여줄 사이즈 크기 : page size  : " + result.getSize());
+        // 임시 리스트 생성해서, 디비에서 전달 받은 데이터를 담아두기.
+        List<Board> todoList = result.getContent();
+        log.info("디비에서 페이징된 조회될 데이터 10개 : todoList  : ");
+        todoList.forEach(board -> log.info(board));
+
     }
 
 
