@@ -65,7 +65,7 @@ Pageable 인터페이스 이용. -> 리턴 타입 : Page 타입을 반환 받음
 페이징 준비물 도구 : PageRequest
 예시)
 PageRequest.of(페이지번호, 사이즈크기, 정렬기준)
-PageRequest.of(0, 10, 오름,내림)
+PageRequest.of(0, 10, [오름,내림])
 
 
 
