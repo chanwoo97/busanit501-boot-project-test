@@ -71,7 +71,6 @@ tasks.named('test') {
 // Querydsl  설치, 순서4
 // 프로젝트를 빌드 할 때마다, 해당 Q 도메인을 소스로 등록하는 과정을, 자동으로
 sourceSets {
-
     main {
         java {
             srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
