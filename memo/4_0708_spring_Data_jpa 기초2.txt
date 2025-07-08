@@ -107,9 +107,13 @@ select * from board b where b.name = #{id}
 해당 조건들마다, 각각의 정적인(고정) sql 다 만들어야함,
 
 QueryDSL
+DSL (Domain-Specific Language)
+-> 자바 문법 -> SQL 이용한다.
 -> 동적으로 개발이 가능하고,
 -> 자바 빌더 패턴 형식으로 작성하니,
 -> 컴파일러의 문법 검사 기능의 도움을 받을수 있음.
+-> 타입의 안정성도 고려하고,
+-> 다른 타 백엔드 기술과도 연동하기 쉽게 만든 프로젝트.
 예시)
 설치 후, 간단한 메서드 작성시 보여주기.
 public Page<Board> search(Pageable pageable) {
