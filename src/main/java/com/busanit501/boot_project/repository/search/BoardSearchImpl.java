@@ -5,6 +5,7 @@ import com.busanit501.boot_project.domain.QBoard;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
@@ -92,6 +93,7 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         // 순서6,
         long count = query.fetchCount();
 
-        return null;
+        // 순서7, 리턴 타입에 맞추기
+        return new PageImpl<>(list,pageable,count);
     }
 }

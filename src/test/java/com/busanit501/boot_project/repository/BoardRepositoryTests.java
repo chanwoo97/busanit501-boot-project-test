@@ -129,6 +129,18 @@ public class BoardRepositoryTests {
         Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
         // 단위 테스트 실행하고, sql 전달 여부, 콘솔에서, sql 출력 확인하기, 목적.,
         // 자바 문법으로 -> sql 어떻게 전달을 하는지 여부를 확인, 관건. !!!!
+
+        // 결과 값, 콘솔에서 확인.
+        log.info("전체 갯수 : total count : " + result.getTotalElements());
+        log.info("전체 페이지 : total pages : " + result.getTotalPages());
+        log.info("현재 페이지 번호 : page number  : " + result.getNumber());
+        log.info("보여줄 사이즈 크기 : page size  : " + result.getSize());
+        log.info("이전 페이지 유무 : " + result.hasPrevious());
+        log.info("다음 페이지 유무 : " + result.hasNext());
+        // 임시 리스트 생성해서, 디비에서 전달 받은 데이터를 담아두기.
+        List<Board> todoList = result.getContent();
+        log.info("디비에서 페이징된 조회될 데이터 10개 : todoList  : ");
+        todoList.forEach(board -> log.info(board));
     }
 
 }
