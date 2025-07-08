@@ -52,15 +52,26 @@ public class BoardRepositoryTests {
     @Test
     public void testUpdate() {
         Long bno = 100L;
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
         //Db 로 부터 조회 된 데이터를 임시 객체에 담기
         Optional<Board> result = boardRepository.findById(bno);
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
         // 패턴이니 잘 숙지, 있으면 엔티티 클래스 타입으로 받고, 없으면 예외 발생시키기
         Board board = result.orElseThrow();
         // 변경할 제목, 내용만 교체 하면 됨.
         board.changTitleContent("수정제목","수정, 오늘 점심 뭐 먹지?");
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
         // 실제 디비에 반영.
         boardRepository.save(board);
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
 
+    } //3. update
+
+    //4. delete
+    @Test
+    public void testDelete() {
+        Long bno = 1L;
+        boardRepository.deleteById(bno);
     }
 
 
