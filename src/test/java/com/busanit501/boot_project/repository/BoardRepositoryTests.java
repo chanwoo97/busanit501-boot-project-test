@@ -76,7 +76,9 @@ public class BoardRepositoryTests {
     @Test
     public void testDelete() {
         Long bno = 1L;
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
         boardRepository.deleteById(bno);
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
     }
 
     //5. 페이징 테스트
@@ -86,7 +88,9 @@ public class BoardRepositoryTests {
         // of(페이지번호(0: 1페이지), 사이즈, 정렬조건)
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
         // JpaRepository 이용해서, 페이징 처리가 된 데이터를 받기.
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
         Page<Board> result = boardRepository.findAll(pageable);
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
         // 페이징 관련 기본 정보 를 출력가능.
         // 1) 전체 갯수 2) 전체 페이지 3) 현재 페이지 번호
         // 4) 보여줄 사이즈 크기 10개,
@@ -126,7 +130,9 @@ public class BoardRepositoryTests {
         // 페이징 정보,
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
         // 실제 디비 가져오기 작업,
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
         Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
         // 단위 테스트 실행하고, sql 전달 여부, 콘솔에서, sql 출력 확인하기, 목적.,
         // 자바 문법으로 -> sql 어떻게 전달을 하는지 여부를 확인, 관건. !!!!
 
