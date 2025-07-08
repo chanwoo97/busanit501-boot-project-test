@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -33,6 +34,16 @@ public class BoardRepositoryTests {
             //====================== JpaRepository에서 확인 하는 부분은 여기==================================
             log.info("bno : " + result.getBno());
         });
+    }// 1 insert 확인,
+
+    @Test
+    public void testSelect() {
+        Long tno = 100L;
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
+        Optional<Board> result = boardRepository.findById(tno);
+        //====================== JpaRepository에서 확인 하는 부분은 여기==================================
+        Board board = result.orElseThrow();
+        log.info("bno : " + board);
     }
 
 }
