@@ -36,6 +36,16 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         List<Board> list = query.fetch(); // db에서 데이터 가져오기.
         // 순서5
         long count = query.fetchCount(); // 가져온 디비의 갯수 확인.
+        // 순서6
+        // 페이징 조건 추가해보기. 검색 쿼리에 , 페이징 조건 탑재
+        this.getQuerydsl().applyPagination(pageable,query);
+        // 순서7
+        // 페이징 조건을 적용하고, 조회하기.
+        List<Board> list2 = query.fetch();
+        // 순서8
+        // 페이징 조건 적용 + 전체 갯수
+        long count2 = query.fetchCount();
+
         return null;
     }
 }
