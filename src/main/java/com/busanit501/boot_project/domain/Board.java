@@ -23,5 +23,12 @@ public class Board extends BaseEntity {
     private String content;
     private String writer;
 
+    // 불변성으로, 데이터를 직접 수정하지않고,
+    // 변경하려는 필드를 , 따로 메서드로 분리해서 작업함.
+    public void changTitleContent(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
 
 }
