@@ -110,6 +110,25 @@ public class BoardRepositoryTests {
         // 준비물 가지고, QueryDSL  , 백그라운드 동작 과정 확인 해보기.
         boardRepository.search(pageable);
     }
+    // 6, QueryDSL 확인, 자바 문법 -> SQL 전달하기.
 
+    // 7. QueryDSL 확인, 자바 문법 -> SQL 전달하기.2
+    // 페이징 정보 + 검색 정보를 같이 전달해서, 조회하기.
+    @Test
+    public void testSearchAll() {
+        // 더미 데이터 2개 필요,
+        // 1) 페이징 정보, 2) 검색 정보
+        // 검색 정보 더미 데이터 만들기 .
+        // 화면의 체크박스에서, 작성자, 내용, 제목 다 체크 했다 가정.
+        String[] types = {"t","c","w"};
+        //검색어
+        String keyword = "1";
+        // 페이징 정보,
+        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
+        // 실제 디비 가져오기 작업,
+        Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
+        // 단위 테스트 실행하고, sql 전달 여부, 콘솔에서, sql 출력 확인하기, 목적.,
+        // 자바 문법으로 -> sql 어떻게 전달을 하는지 여부를 확인, 관건. !!!!
+    }
 
 }
