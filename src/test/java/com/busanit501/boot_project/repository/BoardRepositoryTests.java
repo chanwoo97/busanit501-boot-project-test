@@ -100,6 +100,15 @@ public class BoardRepositoryTests {
         log.info("디비에서 페이징된 조회될 데이터 10개 : todoList  : ");
         todoList.forEach(board -> log.info(board));
 
+    } //5. 페이징 테스트
+
+    // 6, QueryDSL 확인, 자바 문법 -> SQL 전달하기.
+    @Test
+    public void testSearch() {
+        // 화면에서 전달 받을 페이징 정보, 더미 데이터 필요함.
+        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
+        // 준비물 가지고, QueryDSL  , 백그라운드 동작 과정 확인 해보기.
+        boardRepository.search(pageable);
     }
 
 
