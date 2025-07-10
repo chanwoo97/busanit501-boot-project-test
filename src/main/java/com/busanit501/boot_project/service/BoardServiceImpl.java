@@ -11,6 +11,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.convert.ReadingConverter;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Log4j2
 @RequiredArgsConstructor
@@ -28,5 +30,18 @@ public class BoardServiceImpl implements BoardService{
         // 실제 디비에 쓰기 작업.
         Long bno = boardRepository.save(board).getBno();
         return bno;
+    }
+
+    @Override
+    public BoardDTO readOne(Long bno) {
+        // 본인 또 기능 만들어서 구현 하는게 아니라,
+        // 다른 누군가 만들어 둔 기능을 이용하기.
+        // 외주 주기.->boardRepository
+        // 패턴 고정, findById -> 받을 때, Optional 받기
+     Optional<Board> result = boardRepository.findById(bno);
+     Board board = result.orElseThrow();
+     // 엔티티 클래스 타입(VO) -> DTO 타입 변환.
+     BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+        return boardDTO;
     }
 }

@@ -24,4 +24,11 @@ public class BoardServiceTests {
         // 실제 서비스 이용해서, 외주 주기.
         boardService.register(boardDTO);
     }
+
+    @Test
+    public void testReadOne() {
+        // 실제 디비 번호 bno, 각자 디비에 있는 내용으로 조회하기.
+        BoardDTO boardDTO = boardService.readOne(1L);
+        log.info("서비스 단위테스트에서 하나 조회 boardDTO : " + boardDTO);
+    }
 }

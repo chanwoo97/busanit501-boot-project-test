@@ -5,4 +5,5 @@ import com.busanit501.boot_project.dto.BoardDTO;
 public interface BoardService {
 
     Long register(BoardDTO boardDTO);
+    BoardDTO readOne(Long bno);
 }

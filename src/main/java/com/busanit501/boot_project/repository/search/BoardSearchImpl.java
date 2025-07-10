@@ -55,11 +55,11 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
     // 자바 메서드로 -> sql 전달하기.
     @Override
     public Page<Board> searchAll(String[] types, String keyword, Pageable pageable) {
-        // 순서1
+        // 순서1, 고정
         QBoard board = QBoard.board; // (board)
-        // 순서2
+        // 순서2, 고정
         JPQLQuery<Board> query = from(board); // select .. from board
-        // 순서3,
+        // 순서3, 옵션
         // where 조건절 , BooleanBuilder 를 이용해서 조건 추가.
         // select .. from board where ....
         if ((types != null && types.length > 0) && keyword != null) {
@@ -85,12 +85,12 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         query.where(board.bno.gt(0L));
 
         // paging 조건 추가하기.
-        // 순서4,
+        // 순서4, 고정, 페이징 처리시,
         this.getQuerydsl().applyPagination(pageable,query);
-        // 순서5,
+        // 순서5, 고정, 데이터 가지고 올때
         // 위의 검색 조건, 페이징 조건으로 sql  전달하기.  데이터 가져오기
         List<Board> list = query.fetch();
-        // 순서6,
+        // 순서6, 고정, 데이터 가지고 올때
         long count = query.fetchCount();
 
         // 순서7, 리턴 타입에 맞추기
