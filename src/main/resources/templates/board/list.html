@@ -22,28 +22,57 @@
                     </h5>
                     <table class="table">
                         <thead>
-                            <tr>
-                                <th scope="col">Bno</th>
-                                <th scope="col">Title</th>
-                                <th scope="col">Writer</th>
-                                <th scope="col">RegDate</th>
-                            </tr>
+                        <tr>
+                            <th scope="col">Bno</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Writer</th>
+                            <th scope="col">RegDate</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="dto: ${responseDTO.dtoList}">
-                                <th scope="row">[[${dto.bno}]]</th>
-                                <td>
-                                    [[${dto.title}]]
-                                </td>
-                                <td>
-                                    [[${dto.writer}]]
-                                </td>
-                                <td>
-                                    [[${#temporals.format(dto.regDate,'yyyy-MM-dd HH:mm:ss')}]]
-                                </td>
-                            </tr>
+                        <tr th:each="dto: ${responseDTO.dtoList}">
+                            <th scope="row">[[${dto.bno}]]</th>
+                            <td>
+                                [[${dto.title}]]
+                            </td>
+                            <td>
+                                [[${dto.writer}]]
+                            </td>
+                            <td>
+                                [[${#temporals.format(dto.regDate,'yyyy-MM-dd HH:mm:ss')}]]
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
+                    <!--                    페이지네이션 번호 화면-->
+                    <div class="float-end">
+                        <ul class="pagination flex-wrap">
+<!--                            이전 링크-->
+                            <li class="page-item" th:if="${responseDTO.prev}">
+                                <a class="page-link" th:data-num="${responseDTO.start - 1}">
+                                    Previous
+                                </a>
+                            </li>
+<!--                            페이지 번호 출력 10개-->
+                            <th:block th:each="i : ${#numbers.sequence(responseDTO.start, responseDTO.end)}">
+                                <li th:class="${responseDTO.page == i} ? 'page-item active' : 'page-item'">
+                                    <a class="page-link" th:data-num="${i}">
+                                        [[${i}]]
+                                    </a>
+                                </li>
+                            </th:block>
+<!--                            다음 링크-->
+                            <li class="page-item" th:if="${responseDTO.next}">
+                                <a class="page-link" th:data-num="${responseDTO.end + 1}">
+                                    Next
+                                </a>
+                            </li>
+                        </ul>
+
+                    </div>
+
+                    <!--                    페이지네이션 번호 화면-->
+
                 </div><!--                end card body-->
             </div><!--end card-->
         </div><!--end col-->
