@@ -126,6 +126,25 @@
         </div><!--end col-->
     </div><!--    end row-->
 
+<!--    모달창 테스트-->
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Modal body text goes here.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    모달창 테스트-->
 </div>
 <script layout:fragment="script" th:inline="javascript">
     console.log("list.html의 자바스크립트 영역입니다.")
@@ -144,10 +163,16 @@
         formObj.submit();
     }, false)
 
-    // 모달창 이용해보기.
+
     const result = [[${result}]]
     if(result) {
         alert("글작성 완료 : " + result)
+    }
+
+    // 모달창 이용해보기.
+    const modal = new bootstrap.Modal(document.querySelector(".modal"))
+    if (result) {
+        modal.show()
     }
 
 </script>
