@@ -30,7 +30,7 @@
 
                             <div class="mb-3">
                                 <label for="writer" class="form-control">작성자</label>
-                                <input type="text" class="form-control" id="writer" name="writer" placeholder="지금은 직접 작성자를 입력해주세요, 로그인 후 로그인 유저가 자동으로 탑재됨." readonly>
+                                <input type="text" class="form-control" id="writer" name="writer" placeholder="지금은 직접 작성자를 입력해주세요, 로그인 후 로그인 유저가 자동으로 탑재됨.">
                             </div>
 
                             <div class="mb-3">
@@ -47,7 +47,15 @@
         </div>
     </div>
 <script layout:fragment="script" th:inline="javascript">
-
+    const errors = [[${errors}]]
+    console.log(errors)
+    let errorMsg = ''
+    if(errors) {
+        for(let i = 0; i < errors.length; i++) {
+            errorMsg += `${errors[i].field}는 ${errors[i].code} \n`
+        }
+        alert(errorMsg)
+    }
 </script>
 
 </body>
