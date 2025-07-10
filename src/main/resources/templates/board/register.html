@@ -27,21 +27,6 @@
                                 <textarea type="text" class="form-control col-sm-5" id="content"
                                           name="content" rows="5" placeholder="내용을 입력해주세요"></textarea>
                             </div>
-                            <!--                        로그인한 유저를 , 글 작성자로 자동 등록하기. -->
-
-                            <div class="mb-3">
-                                <label for="writer" class="form-control">작성자</label>
-                                <input type="text" th:value="${user.Username}" class="form-control" id="writer" name="writer" placeholder="지금은 직접 작성자를 입력해주세요, 로그인 후 로그인 유저가 자동으로 탑재됨." readonly>
-                            </div>
-                            <div class="mb-3 input-group">
-                                <span class="input-group-text">첨부파일  </span>
-                                <div class="uploadHidden">
-                                    <!--                                첨부한 이미지의 요소를 첨부할 예정. 서버 전달용이라서, -->
-                                    <!--                                숨겨 두기.-->
-                                    <button type="button" class="btn btn-primary uploadFileBtn">파일추가</button>
-                                </div>
-                            </div>
-
 
                             <div class="mb-3">
                                 <button type="submit" class="btn btn-primary submitBtn">작성</button>
