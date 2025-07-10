@@ -3,15 +3,21 @@ package com.busanit501.boot_project.service;
 
 import com.busanit501.boot_project.domain.Board;
 import com.busanit501.boot_project.dto.BoardDTO;
+import com.busanit501.boot_project.dto.PageRequestDTO;
+import com.busanit501.boot_project.dto.PageResponseDTO;
 import com.busanit501.boot_project.repository.BoardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.convert.ReadingConverter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Log4j2
@@ -60,5 +66,47 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public void remove(Long bno) {
         boardRepository.deleteById(bno);
+    }
+
+    @Override
+    public PageResponseDTO<BoardDTO> list(PageRequestDTO pageRequestDTO) {
+        // type = "twc" -> getTypes -> {"t","c","w"}
+        // 화면으로 부터 전달 받은,
+        // 1)검색 조건과 2)페이징 정보
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+        // 준비된 재료로, 서버에서, 데이터 가져오고, 페이징 정보도 가져오기.
+        Page<Board> result = boardRepository.searchAll(types,keyword,pageable);
+        // Page<Board> result , 들어 있는 정보들 한번더 확인.
+        // 1)전체 갯수 2)전체 페이지 3) 현재 페이지 번호
+        // 3) 보여줄 사이즈 크기 4) 이전 페이지 유무
+        // 5) 다음 페이지 유무
+        // 6) 페이징 처리된 실제 Board 내용도 있다.
+        // 결과 값, 콘솔에서 확인.
+//        log.info("전체 갯수 : total count : " + result.getTotalElements());
+//        log.info("전체 페이지 : total pages : " + result.getTotalPages());
+//        log.info("현재 페이지 번호 : page number  : " + result.getNumber());
+//        log.info("보여줄 사이즈 크기 : page size  : " + result.getSize());
+//        log.info("이전 페이지 유무 : " + result.hasPrevious());
+//        log.info("다음 페이지 유무 : " + result.hasNext());
+
+        // 6) 페이징 처리된 실제 Board 내용. Board -> BoardDTO 로 변환된 리스트로 변경.
+        // result.getContent() -> List<Board>
+        //.stream().map() : 리스트의 요소들을 각각 하나씩 순회 하면서, 타입 변환시키고, 전부다 순회
+        // board -> modelMapper.map(board, BoardDTO.class)
+        //collect(Collectors.toList()); 변환된 DTO를 다시 리스트로 변환 하는 작업.
+        // 병렬 처리, 빌더 패턴으로 한번 연쇄 적용하기.
+        // 결과는,  BoardDTO 로 변환된 리스트로
+        List<BoardDTO> dtoList = result.getContent().stream()
+                .map(board -> modelMapper.map(board, BoardDTO.class)).collect(Collectors.toList());
+        // 이 메서드의 최종 반환 타입: PageResponseDTO<BoardDTO>
+        // 1) 생성자 호출 2) 생성자를 특정 이름으로 정의 해둔 내용이 있다.
+
+        return PageResponseDTO.<BoardDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int)result.getTotalElements())
+                .build();
     }
 }

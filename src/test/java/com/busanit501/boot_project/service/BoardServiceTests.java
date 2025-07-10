@@ -1,6 +1,8 @@
 package com.busanit501.boot_project.service;
 
 import com.busanit501.boot_project.dto.BoardDTO;
+import com.busanit501.boot_project.dto.PageRequestDTO;
+import com.busanit501.boot_project.dto.PageResponseDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +47,19 @@ public class BoardServiceTests {
     @Test
     public void testDelete() {
         boardService.remove(102L);
+    }
+
+    @Test
+    public void testList() {
+        // 화면으로부터 전달 받은 , 페이징 정보, 검색 정보, 더미 데이터 만들기.
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .type("tcw")
+                .keyword("1")
+                .page(1)
+                .size(10)
+                .build();
+
+        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
+        log.info("서비스 테스트 작업 중, responseDTO : " + responseDTO);
     }
 }
