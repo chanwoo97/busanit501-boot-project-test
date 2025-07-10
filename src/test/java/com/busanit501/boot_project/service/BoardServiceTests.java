@@ -28,7 +28,17 @@ public class BoardServiceTests {
     @Test
     public void testReadOne() {
         // 실제 디비 번호 bno, 각자 디비에 있는 내용으로 조회하기.
-        BoardDTO boardDTO = boardService.readOne(1L);
+        BoardDTO boardDTO = boardService.readOne(102L);
         log.info("서비스 단위테스트에서 하나 조회 boardDTO : " + boardDTO);
+    }
+
+    @Test
+    public void testModify() {
+        // 수정할 실제 데이터 이용, 102L
+        BoardDTO boardDTO = boardService.readOne(102L);
+        boardDTO.setTitle("수정2 테스트 ");
+        boardDTO.setContent("오늘 점심 뭐 먹지 ??");
+
+        boardService.modify(boardDTO);
     }
 }

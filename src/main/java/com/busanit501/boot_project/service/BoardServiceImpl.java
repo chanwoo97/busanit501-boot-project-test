@@ -44,4 +44,16 @@ public class BoardServiceImpl implements BoardService{
      BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
         return boardDTO;
     }
+
+    @Override
+    public void modify(BoardDTO boardDTO) {
+        // boardDTO : 화면에서 전달받은 수정할 데이터 정보 들어있음.
+        // 정보들 중에서, bno 번호를 이용해서, 기존 디비 불러오고,
+        // 수정할 데이터로 교체하고,
+        // 다시 디비에 저장하기.
+        Optional<Board> result = boardRepository.findById(boardDTO.getBno());
+        Board board = result.orElseThrow();
+        board.changTitleContent(boardDTO.getTitle(), boardDTO.getContent());
+        boardRepository.save(board);
+    }
 }
