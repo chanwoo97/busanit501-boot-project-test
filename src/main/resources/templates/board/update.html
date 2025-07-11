@@ -53,13 +53,13 @@
                         <div class="mb-3">
                             <label for="regDate" class="form-control">등록시간</label>
                             <input type="text" class="form-control" id="regDate" name="regDate"
-                                   th:value="${#temporals.format(dto.regDate,'yyyy-MM-dd HH:mm:ss')}" readonly
+                                   th:value="${#temporals.format(dto.regDate,'yyyy-MM-dd HH:mm:ss')}" disabled
                             >
                         </div>
                         <div class="mb-3">
                             <label for="modDate" class="form-control">수정시간</label>
                             <input type="text" class="form-control" id="modDate" name="modDate"
-                                   th:value="${#temporals.format(dto.modDate,'yyyy-MM-dd HH:mm:ss')}" readonly
+                                   th:value="${#temporals.format(dto.modDate,'yyyy-MM-dd HH:mm:ss')}" disabled
                             >
                         </div>
 
