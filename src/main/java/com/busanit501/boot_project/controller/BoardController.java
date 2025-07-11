@@ -70,4 +70,28 @@ public class BoardController {
 
     }
 
+    // 수정 처리 post 작업,
+    @PostMapping("/update")
+    public String update(PageRequestDTO pageRequestDTO,
+                         @Valid BoardDTO boardDTO,
+                         BindingResult bindingResult,
+                         RedirectAttributes redirectAttributes) {
+        //화면에서, 데이터가 잘 전달 되는지 확인.
+        log.info("BoardController 에서, update 작업중 boardDTO:" + boardDTO);
+        if (bindingResult.hasErrors()) {
+            log.info("update, 입력 작업중, 유효성 체크에 해당 사항 있음");
+            String link = pageRequestDTO.getLink();
+            redirectAttributes.addFlashAttribute("errors", bindingResult.getAllErrors());
+            // 수정중, 잘못된 오류가 발생시, 현재 수정하는 화면으로 이동하는게 더 좋다.
+            // 현재 , 수정하고 있는 게시글의 번호 정보가 필요함.
+            // 쿼리 스트링으로 bno 번호는 전달하고,
+            redirectAttributes.addAttribute("bno", boardDTO.getBno());
+            return "redirect:/board/update?"+link;
+        }
+        boardService.modify(boardDTO);
+        redirectAttributes.addFlashAttribute("result", "수정완료");
+        redirectAttributes.addAttribute("bno", boardDTO.getBno());
+        return  "redirect:/board/read";
+    }
+
 }

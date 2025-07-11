@@ -32,13 +32,13 @@
                         <div class="mb-3">
                             <label for="title" class="form-control">제목</label>
                             <input type="text" class="form-control" id="title" name="title" placeholder="제목을 입력해주세요"
-                                   th:value="${dto.title}" readonly>
+                                   th:value="${dto.title}" >
                         </div>
                         <div class="mb-3">
                             <label for="content" class="form-control">내용</label>
                             <textarea type="text" class="form-control col-sm-5" id="content"
                                       name="content" rows="5" placeholder="내용을 입력해주세요"
-                                      readonly
+
                             >[[${dto.content}]]</textarea>
                         </div>
 
@@ -63,18 +63,20 @@
                             >
                         </div>
 
-                        <div class="mb-3" th:with="link = ${pageRequestDTO.link}">
+                        <div class="mb-3">
 <!--                           예시 url
                                 http://localhost:8080/board/update
                                 ?bno=12
                                 &page=1&keyword=1&type=twc-->
 
-                            <a th:href="|@{/board/update}?bno=${dto.bno}&${link}|">
-                                <button type="button" class="btn btn-primary ">수정하기</button>
-                            </a>
-                            <a th:href="|@{/board/list}?${link}|">
-                                <button type="button" class="btn btn-secondary">목록가기</button>
-                            </a>
+<!--                            상세보기 -> 수정화면, 화면이동, get 방식이어서, a태그로, -->
+<!--                            쿼리 스트링 형식으로 데이터 전달 가능. -->
+<!--                            지금 수정화면에서, 변경된 데이터를 포스트 처리해야함. -->
+<!--                            자바스크립트를 이용해서 처리 해야함. -->
+
+                                <button type="button" class="btn btn-primary updateBtn">수정하기</button>
+                                <button type="button" class="btn btn-secondary listBtn">목록가기</button>
+                                <button type="button" class="btn btn-danger removeBtn">삭제가기</button>
                         </div>
 
                     </form>
