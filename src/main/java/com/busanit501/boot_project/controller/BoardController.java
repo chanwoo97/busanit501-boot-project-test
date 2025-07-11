@@ -52,4 +52,20 @@ public class BoardController {
         return  "redirect:/board/list";
     }
 
+    @GetMapping("/read")// 화면 경로 : /board/read.html 작업함.
+    // 예시
+    //http://localhost:8080/board/list?type=tcw&keyword=1&page=2
+    // type, keyword, page, -> PageRequestDTO의 멤버 이름과 동일함.
+    // 그래서, 자동 수집함. !!중요!!
+    // 자동 화면으로 전달도 함. !!중요!!
+    public void read(Long bno, PageRequestDTO pageRequestDTO,
+                     Model model) {
+        // 누구에게 외주 줄까요? BoardService  외주,
+        BoardDTO boardDTO = boardService.readOne(bno);
+        log.info("BoardController 에서, read 작업중 boardDTO: "+ boardDTO);
+        // 서버 -> 화면, 데이터 전달,
+        model.addAttribute("dto", boardDTO);
+
+    }
+
 }
