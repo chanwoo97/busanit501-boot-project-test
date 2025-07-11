@@ -117,6 +117,16 @@
         formObj.submit()
     }, false)
 
+    //삭제하기.
+    document.querySelector(".removeBtn").addEventListener("click", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        formObj.action = `/board/remove`
+        formObj.method = 'post'
+        formObj.submit()
+    }, false)
+
 </script>
 
 

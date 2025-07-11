@@ -94,4 +94,12 @@ public class BoardController {
         return  "redirect:/board/read";
     }
 
+    @PostMapping("/remove")
+    public String remove(Long bno, RedirectAttributes redirectAttributes) {
+        log.info("BoardController 에서, remove 작업중 , 넘어온 bno 확인: " + bno);
+        boardService.remove(bno);
+        redirectAttributes.addFlashAttribute("result", "삭제완료!!");
+        return "redirect:/board/list";
+    }
+
 }
