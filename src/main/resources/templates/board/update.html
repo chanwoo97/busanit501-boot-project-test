@@ -7,7 +7,7 @@
       lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>read화면</title>
+    <title>update화면</title>
 </head>
 <!--순서2, basic.html 템플릿을 사용중이고, -->
 <!--우리는, layout:fragment="content" 여기에,read.html 내용이 들어감-->
@@ -19,11 +19,11 @@
         <div class="col">
             <div class="card">
                 <div class="card-header">
-                    Board Read
+                    Board Update
                 </div>
                 <div class="card-body">
                     <!--                        폼 형식 작성하기-->
-                    <form method="post" action="/board/update">
+                    <form method="post" th:action="@{/board/update}" id="f1">
                         <div class="mb-3">
                             <label for="tno" class="form-control">Tno</label>
                             <input type="text" class="form-control" id="tno" name="tno"

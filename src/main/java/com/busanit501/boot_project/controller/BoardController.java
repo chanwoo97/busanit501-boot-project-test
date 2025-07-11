@@ -52,7 +52,9 @@ public class BoardController {
         return  "redirect:/board/list";
     }
 
-    @GetMapping("/read")// 화면 경로 : /board/read.html 작업함.
+    // 상세보기 화면, 수정하는 화면 동일.
+    // 읽기 전용, 수정이 가능한 input
+    @GetMapping({"/read","/update"})// 화면 경로 : /board/read.html 작업함.
     // 예시
     //http://localhost:8080/board/list?type=tcw&keyword=1&page=2
     // type, keyword, page, -> PageRequestDTO의 멤버 이름과 동일함.
