@@ -86,7 +86,30 @@
 
         </div>
     </div>
+    <script layout:fragment="script" th:inline="javascript">
+        const errors = [[${errors}]]
+        console.log(errors)
+        let errorMsg = ''
+        if(errors) {
+            for(let i = 0; i < errors.length; i++) {
+                errorMsg += `${errors[i].field}는 ${errors[i].code} \n`
+            }
+            alert(errorMsg)
+        }
 
+        // 수정 이벤트 처리
+        const link = [[${pageRequestDTO.getLink()}]]
+        const formObj = document.querySelector("#f1")
+
+        document.querySelector(".updateBtn").addEventListener("click", function (e) {
+            e.preventDefault()
+            e.stopPropagation()
+
+            formObj.action = `/board/update?${link}`
+            formObj.method = 'post'
+            formObj.submit()
+        }, false)
+    </script>
 
 </div>
 
