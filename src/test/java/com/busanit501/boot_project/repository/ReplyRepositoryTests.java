@@ -21,6 +21,8 @@ import java.util.List;
 public class ReplyRepositoryTests {
     @Autowired
     private ReplyRepository replyRepository;
+    @Autowired
+    private BoardRepository boardRepository;
 
     @Test
     public void testInsert() {
@@ -64,7 +66,7 @@ public class ReplyRepositoryTests {
     @Rollback(false)
     public void testInsertMany() {
         Long bno = 108L;
-        Board board = Board.builder().build();
+        Board board = boardRepository.findById(bno).orElseThrow();
         List<Reply> replies = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
