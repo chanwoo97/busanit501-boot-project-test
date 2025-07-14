@@ -12,6 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 @Log4j2
 public class ReplyRepositoryTests {
@@ -23,11 +26,11 @@ public class ReplyRepositoryTests {
         // 댓글 작성 테스트,
         // 준비물 1) 실제 부모 게시글 존재,
         Long bno = 108L;
-        
+
         //부모 게시글 더미 데이터,
         Board board = Board.builder()
                 .bno(bno).build();
-        
+
         // 댓글의 더미 데이터 
         Reply reply = Reply.builder()
                 // 부모 게시글 객체는 반드시 필요함. 
@@ -46,13 +49,30 @@ public class ReplyRepositoryTests {
         Long bno = 109L;
         // 페이징 정보 담기.
         Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
-        Page<Reply> result = replyRepository.listOfBoard(bno,pageable);
+        Page<Reply> result = replyRepository.listOfBoard(bno, pageable);
         result.getContent().forEach(
-                reply -> {log.info("replyRepositoryTests : 조회된 댓글 확인"+reply);}
+                reply -> {
+                    log.info("replyRepositoryTests : 조회된 댓글 확인" + reply);
+                }
         );
 
     }
 
+    @Test
+    public void testInsertMany() {
+        Long bno = 108L;
+        Board board = Board.builder().build();
+        List<Reply> replies = new ArrayList<>();
+
+        for (int i = 0; i < 100; i++) {
+            replies.add(Reply.builder()
+                    .board(board)
+                    .replyText("더미 댓글 내용 : " + i)
+                    .replyer("더미 유저_" + i)
+                    .build());
+        }
+        replyRepository.saveAll(replies);
+    }
 
 
 }

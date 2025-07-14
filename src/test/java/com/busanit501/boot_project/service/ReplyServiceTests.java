@@ -55,4 +55,10 @@ public class ReplyServiceTests {
         replyService.remove(8L);
     }
 
+    @Test
+    public void testGetPaging() {
+        // 페이징 처리를 위한 더미 데이터 준비물 준비 작업,
+
+    }
+
 }
