@@ -33,7 +33,7 @@ public class Reply extends BaseEntity {
         this.board = board;
     }
     // 댓글 내용 수정하기
-    public void changeReplyText(String replyText) {
-        this.replyText = replyText;
+    public void changeReplyText(String text) {
+        this.replyText = text;
     }
 }

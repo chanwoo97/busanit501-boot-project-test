@@ -56,6 +56,10 @@ public class ReplyServiceImpl implements ReplyService {
         log.info("ReplyServiceImpl 에서, modify ,데이터 확인2 reply: " + reply);
         // 교체할 데이터로 교체 작업 후,
         reply.changeReplyText(replyDTO.getReplyText());
+
+        // 교체 후, 데이터 확인 한번 더
+        log.info("ReplyServiceImpl 에서, modify ,데이터 확인3 reply: " + reply);
+
         // 다시 저장.
         replyRepository.save(reply);
     }
