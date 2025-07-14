@@ -6,6 +6,10 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @SpringBootTest
 @Log4j2
@@ -27,11 +31,23 @@ public class ReplyRepositoryTests {
         Reply reply = Reply.builder()
                 // 부모 게시글 객체는 반드시 필요함. 
                 .board(board)
-                .replyText("샘플 게시글 내용")
-                .replyer("샘플 댓글 작성자")
+                .replyText("샘플 게시글 내용3")
+                .replyer("샘플 댓글 작성자3")
                 .build();
 
         replyRepository.save(reply);
+    }
+
+    @Test
+    public void testBoardReplies() {
+        Long bno = 109L;
+        // 페이징 정보 담기.
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
+        Page<Reply> result = replyRepository.listOfBoard(bno,pageable);
+        result.getContent().forEach(
+                reply -> {log.info("replyRepositoryTests : 조회된 댓글 확인"+reply);}
+        );
+
     }
 
 }

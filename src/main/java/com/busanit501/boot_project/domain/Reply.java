@@ -8,7 +8,10 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "board") // Reply 출력시, 부모 테이블은 제외 일단, 
+@ToString(exclude = "board") // Reply 출력시, 부모 테이블은 제외 일단,
+@Table(name = "Reply", indexes = {
+        @Index(name = "idx_reply_board_bno", columnList = "board_bno")
+})
 public class Reply extends BaseEntity {
     
     @Id // pk
