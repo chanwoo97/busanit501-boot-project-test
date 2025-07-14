@@ -23,4 +23,24 @@ public class ReplyServiceTests {
 
         log.info("작성한 댓글 번호 : "+replyService.register(replyDTO));
     }
+
+    @Test
+    public void testFindByRno() {
+        // 실제 댓글 rno 번호로 확인.
+        ReplyDTO replyDTO = replyService.read(6L);
+        log.info("댓글 서비스 테스트 하나 조회 replyDTO : "+replyDTO);
+    }
+
+    @Test
+    public void testModify() {
+        // 실제 디비를 조회 해서, 수정해보기. 6 댓글로 작성하기.
+
+        // 6번에 대한 댓글의 DTO 조회
+
+        // 임시 데이터로 수정하고,
+
+        // 다시 저장하기.
+
+    }
+
 }
