@@ -1,0 +1,26 @@
+package com.busanit501.boot_project.domain;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString(exclude = "board") // Reply 출력시, 부모 테이블은 제외 일단, 
+public class Reply extends BaseEntity {
+    
+    @Id // pk
+    // 마리아 디비의 자동 순선 생성 정책을 따르게요.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long rno;
+
+    // Reply :N ---> :1 Board
+    // 늦게 초기화 하겠다. 사용하는 시점에 로드하겠다
+    @ManyToOne(fetch = FetchType.LAZY) 
+    private Board board;
+    
+    private String replyText; //댓글 내용
+    private String replyer; // 댓글 작성자
+}
