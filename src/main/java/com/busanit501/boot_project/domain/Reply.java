@@ -27,4 +27,8 @@ public class Reply extends BaseEntity {
     
     private String replyText; //댓글 내용
     private String replyer; // 댓글 작성자
+
+    public void changeBoard(Board board) {
+        this.board = board;
+    }
 }
