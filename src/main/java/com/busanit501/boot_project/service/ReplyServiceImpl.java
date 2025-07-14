@@ -18,7 +18,9 @@ public class ReplyServiceImpl implements ReplyService {
 
     @Override
     public Long register(ReplyDTO replyDTO) {
+        log.info("ReplyServiceImpl 에서, 화면으로 부터 전달 받은 데이터 확인 replyDTO: " + replyDTO);
         Reply reply = modelMapper.map(replyDTO, Reply.class);
+        log.info("ReplyServiceImpl 에서, 화면으로 부터 전달 받은 데이터 확인2 reply: " + reply);
         Long rno = replyRepository.save(reply).getRno();
         return rno;
     }
