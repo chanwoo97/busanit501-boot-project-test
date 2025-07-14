@@ -1,11 +1,18 @@
 package com.busanit501.boot_project.service;
 
+import com.busanit501.boot_project.domain.Reply;
+import com.busanit501.boot_project.dto.PageRequestDTO;
+import com.busanit501.boot_project.dto.PageResponseDTO;
 import com.busanit501.boot_project.dto.ReplyDTO;
 import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.annotation.Rollback;
 
 @SpringBootTest
@@ -58,7 +65,16 @@ public class ReplyServiceTests {
     @Test
     public void testGetPaging() {
         // 페이징 처리를 위한 더미 데이터 준비물 준비 작업,
-
+        Long bno = 108L;
+        // 페이징 정보 담기.
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("rno").descending());
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+//                .keyword("")
+                .build();
+        PageResponseDTO<ReplyDTO> pageResponseDTO = replyService.getListOfBoard(bno,pageRequestDTO);
+        log.info("ReplyServiceTests 에서, 페이징 처리 확인 : pageResponseDTO " + pageResponseDTO);
     }
 
 }
