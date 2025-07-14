@@ -127,7 +127,7 @@ public class BoardRepositoryTests {
         // 화면의 체크박스에서, 작성자, 내용, 제목 다 체크 했다 가정.
         String[] types = {"t","c","w"};
         //검색어
-        String keyword = "1";
+        String keyword = "ㅇ";
         // 페이징 정보,
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
         // 실제 디비 가져오기 작업,
@@ -157,7 +157,7 @@ public class BoardRepositoryTests {
         // 1)
         String[] types = {"t","c","w"};
         //검색어
-        String keyword = "1";
+        String keyword = "ㅇ";
         // 페이징 정보,
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
 
