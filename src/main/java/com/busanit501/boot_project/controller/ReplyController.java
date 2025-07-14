@@ -55,7 +55,7 @@ public class ReplyController {
             throw new BindException(bindingResult);
         }
 
-        log.info("replyDTO : " + replyDTO);
+        log.info("ReplyController에서 작업중 replyDTO : " + replyDTO);
         // 화면이 없어서, 하드코딩으로 더미 데이터 만들기.
 //        Map<String,Long> resultMap = Map.of("rno",100L);
         // 실제로, 데이터를 받아서, 디비에 저장하기.
