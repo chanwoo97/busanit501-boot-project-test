@@ -38,10 +38,12 @@ public class ReplyServiceTests {
         // 실제 디비를 조회 해서, 수정해보기. 6 댓글로 작성하기.
 
         // 6번에 대한 댓글의 DTO 조회
-
+        ReplyDTO replyDTO = replyService.read(6L);
         // 임시 데이터로 수정하고,
+        replyDTO.setReplyText("서비스 단위 테스트 중이고, 수정하기 ");
 
         // 다시 저장하기.
+        replyService.modify(replyDTO);
 
     }
 
