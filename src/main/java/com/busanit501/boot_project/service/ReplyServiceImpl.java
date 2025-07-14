@@ -39,9 +39,11 @@ public class ReplyServiceImpl implements ReplyService {
         // 디비에서 조회 후, -> 옵션널 받고 -> 다시 엔티티 변환,
         Optional<Reply> result = replyRepository.findById(rno);
         Reply reply = result.orElseThrow();
+        log.info("ReplyServiceImpl 에서, read ,데이터 확인 reply: " + reply);
         // 한줄로 표기하기.
 //        Reply reply = replyRepository.findById(rno).orElseThrow();
         ReplyDTO replyDTO = modelMapper.map(reply, ReplyDTO.class);
+        log.info("ReplyServiceImpl 에서, read ,데이터 확인2 replyDTO: " + replyDTO);
         return replyDTO;
     }
 
