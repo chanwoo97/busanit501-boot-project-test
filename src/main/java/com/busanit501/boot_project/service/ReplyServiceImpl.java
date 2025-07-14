@@ -33,4 +33,30 @@ public class ReplyServiceImpl implements ReplyService {
         Long rno = replyRepository.save(reply).getRno();
         return rno;
     }
+
+    @Override
+    public ReplyDTO read(Long rno) {
+        // 디비에서 조회 후, -> 옵션널 받고 -> 다시 엔티티 변환,
+        Optional<Reply> result = replyRepository.findById(rno);
+        Reply reply = result.orElseThrow();
+        // 한줄로 표기하기.
+//        Reply reply = replyRepository.findById(rno).orElseThrow();
+        ReplyDTO replyDTO = modelMapper.map(reply, ReplyDTO.class);
+        return replyDTO;
+    }
+
+    @Override
+    public void modify(ReplyDTO replyDTO) {
+        // 기존 댓글을 불러와서,
+        Reply reply = replyRepository.findById(replyDTO.getRno()).orElseThrow();
+        // 교체할 데이터로 교체 작업 후,
+        reply.changeReplyText(replyDTO.getReplyText());
+        // 다시 저장.
+        replyRepository.save(reply);
+    }
+
+    @Override
+    public void remove(Long rno) {
+        replyRepository.deleteById(rno);
+    }
 }
