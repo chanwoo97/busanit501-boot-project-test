@@ -22,7 +22,7 @@ public class ReplyRepositoryTests {
     public void testInsert() {
         // 댓글 작성 테스트,
         // 준비물 1) 실제 부모 게시글 존재,
-        Long bno = 109L;
+        Long bno = 108L;
         
         //부모 게시글 더미 데이터,
         Board board = Board.builder()
@@ -32,8 +32,8 @@ public class ReplyRepositoryTests {
         Reply reply = Reply.builder()
                 // 부모 게시글 객체는 반드시 필요함. 
                 .board(board)
-                .replyText("샘플 게시글 내용3")
-                .replyer("샘플 댓글 작성자3")
+                .replyText("샘플 게시글 내용4")
+                .replyer("샘플 댓글 작성자4")
                 .build();
 
         replyRepository.save(reply);

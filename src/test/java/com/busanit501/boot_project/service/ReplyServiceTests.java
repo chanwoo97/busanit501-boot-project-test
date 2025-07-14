@@ -6,6 +6,7 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 
 @SpringBootTest
 @Log4j2
@@ -17,7 +18,7 @@ public class ReplyServiceTests {
     public void testRegister() {
         // 실제 디비에, 게시글이 존재해야함.
         ReplyDTO replyDTO = ReplyDTO.builder()
-                .replyText("샘플 서비스 테스트, 댓글 작성3")
+                .replyText("샘플 서비스 테스트, 댓글 작성4")
                 .replyer("이상용")
                 .bno(108L)
                 .build();
@@ -35,13 +36,14 @@ public class ReplyServiceTests {
 
     @Test
     @Transactional
+    @Rollback(false)
     public void testModify() {
         // 실제 디비를 조회 해서, 수정해보기. 6 댓글로 작성하기.
 
         // 6번에 대한 댓글의 DTO 조회
-        ReplyDTO replyDTO = replyService.read(6L);
+        ReplyDTO replyDTO = replyService.read(8L);
         // 임시 데이터로 수정하고,
-        replyDTO.setReplyText("서비스 단위 테스트 중이고, 수정하기 ");
+        replyDTO.setReplyText("수정 테스트777777777 ");
 
         // 다시 저장하기.
         replyService.modify(replyDTO);

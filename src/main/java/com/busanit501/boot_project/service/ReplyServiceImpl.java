@@ -5,6 +5,7 @@ import com.busanit501.boot_project.domain.Reply;
 import com.busanit501.boot_project.dto.ReplyDTO;
 import com.busanit501.boot_project.repository.BoardRepository;
 import com.busanit501.boot_project.repository.ReplyRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
@@ -48,6 +49,7 @@ public class ReplyServiceImpl implements ReplyService {
         return replyDTO;
     }
 
+    @Transactional
     @Override
     public void modify(ReplyDTO replyDTO) {
         log.info("ReplyServiceImpl 에서, modify ,데이터 확인 replyDTO: " + replyDTO);
@@ -57,7 +59,7 @@ public class ReplyServiceImpl implements ReplyService {
         // 교체할 데이터로 교체 작업 후,
         reply.changeReplyText(replyDTO.getReplyText());
 
-        // 교체 후, 데이터 확인 한번 더
+        // 교체 후, 데이터 확인 한번 더, 정상, 변경할 댓글 내용으로 수정이됨.
         log.info("ReplyServiceImpl 에서, modify ,데이터 확인3 reply: " + reply);
 
         // 다시 저장.
