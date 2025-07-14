@@ -50,4 +50,9 @@ public class ReplyServiceTests {
 
     }
 
+    @Test
+    public void testRemove() {
+        replyService.remove(8L);
+    }
+
 }
