@@ -34,6 +34,7 @@ public class ReplyServiceTests {
     }
 
     @Test
+    @Transactional
     public void testModify() {
         // 실제 디비를 조회 해서, 수정해보기. 6 댓글로 작성하기.
 
