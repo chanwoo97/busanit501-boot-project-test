@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Rollback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +60,8 @@ public class ReplyRepositoryTests {
     }
 
     @Test
+    @Transactional
+    @Rollback(false)
     public void testInsertMany() {
         Long bno = 108L;
         Board board = Board.builder().build();
