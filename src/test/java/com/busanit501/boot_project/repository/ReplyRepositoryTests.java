@@ -2,6 +2,7 @@ package com.busanit501.boot_project.repository;
 
 import com.busanit501.boot_project.domain.Board;
 import com.busanit501.boot_project.domain.Reply;
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class ReplyRepositoryTests {
     }
 
     @Test
+    @Transactional // 엔티티 클래스에서, @ToString(exclude = "board")
+    // (exclude = "board") 제외시, 사용하기.
     public void testBoardReplies() {
         Long bno = 109L;
         // 페이징 정보 담기.
