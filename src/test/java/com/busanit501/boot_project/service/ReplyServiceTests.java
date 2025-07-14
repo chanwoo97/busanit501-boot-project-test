@@ -75,6 +75,7 @@ public class ReplyServiceTests {
                 .build();
         PageResponseDTO<ReplyDTO> pageResponseDTO = replyService.getListOfBoard(bno,pageRequestDTO);
         log.info("ReplyServiceTests 에서, 페이징 처리 확인 : pageResponseDTO " + pageResponseDTO);
+//        pageResponseDTO.getDtoList().forEach(dto -> log.info("dto : "+dto));
     }
 
 }
