@@ -43,6 +43,7 @@ public class ReplyServiceImpl implements ReplyService {
         // 한줄로 표기하기.
 //        Reply reply = replyRepository.findById(rno).orElseThrow();
         ReplyDTO replyDTO = modelMapper.map(reply, ReplyDTO.class);
+        replyDTO.setBno(reply.getBoard().getBno());
         log.info("ReplyServiceImpl 에서, read ,데이터 확인2 replyDTO: " + replyDTO);
         return replyDTO;
     }

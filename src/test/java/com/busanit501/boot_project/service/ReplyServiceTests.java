@@ -1,6 +1,7 @@
 package com.busanit501.boot_project.service;
 
 import com.busanit501.boot_project.dto.ReplyDTO;
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,7 @@ public class ReplyServiceTests {
     }
 
     @Test
+    @Transactional
     public void testFindByRno() {
         // 실제 댓글 rno 번호로 확인.
         ReplyDTO replyDTO = replyService.read(6L);
