@@ -2,6 +2,8 @@ package com.busanit501.boot_project.service;
 
 import com.busanit501.boot_project.domain.Board;
 import com.busanit501.boot_project.domain.Reply;
+import com.busanit501.boot_project.dto.PageRequestDTO;
+import com.busanit501.boot_project.dto.PageResponseDTO;
 import com.busanit501.boot_project.dto.ReplyDTO;
 import com.busanit501.boot_project.repository.BoardRepository;
 import com.busanit501.boot_project.repository.ReplyRepository;
@@ -9,9 +11,17 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -69,5 +79,23 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public void remove(Long rno) {
         replyRepository.deleteById(rno);
+    }
+
+    @Override
+    public PageResponseDTO<ReplyDTO> getListOfBoard(Long bno, PageRequestDTO pageRequestDTO) {
+        // 페이징 준비문 준비,
+        Pageable pageable = PageRequest.of(pageRequestDTO.getPage() <=0 ? 0 : pageRequestDTO.getPage()-1
+                , pageRequestDTO.getSize(), Sort.by("rno").ascending());
+        // 조회 하기.
+        Page<Reply> result = replyRepository.listOfBoard(bno, pageable);
+        List<ReplyDTO> dtoList = result.getContent().stream()
+                .map(reply -> modelMapper.map(reply, ReplyDTO.class))
+                .collect(Collectors.toList());
+
+        return PageResponseDTO.<ReplyDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(dtoList)
+                .total((int) result.getTotalElements())
+                .build();
     }
 }
