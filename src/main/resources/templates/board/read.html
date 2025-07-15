@@ -168,10 +168,19 @@
 
 
     // 서버로부터, 페이징 처리가 된 댓글의 내용을 받는 함수.
+    // 적용하기.
+    // 1) 목록 출력하는 UI 작성하는 함수에 적용
+    // 2) 목록 페이징을 출력하는 UI 작성하는 함수에 적용
     function printReplies(page, size, goLast) {
         //reply.js 에서 정의한, getList 함수를 사용해서, 비동기적으로 데이터를 전달 받기.
         getList({bno,page,size,goLast}).then(
-            data => {console.log(data)}
+            // 처음에는 , 데이터 받느지 유무를 확인하기위해서, 콘솔에 출력
+            // 두번째, 실제 화면에 적용하기.
+            // data => {console.log(data)}
+            data => {
+                printList(data.dtoList) // 댓글 목록 출력
+                printPages(data) // 댓글 페이징 출력
+            }
         ).catch(e => {
             console.error(e)
         })
