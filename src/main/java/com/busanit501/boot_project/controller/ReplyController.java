@@ -79,5 +79,17 @@ public class ReplyController {
 
     }
 
+    // 댓글 하나 조회
+    // http://localhost:8080/replies/104
+    @Tag(name = "댓글 하나 조회", description = "댓글 하나 조회 레스트 버전 get 방식")
+    @GetMapping(value = "/{rno}")
+    public ReplyDTO getReplyDTO(@PathVariable Long rno) {
+        log.info("ReplyController에서 작업중, 전달받은 rno 확인 :  " + rno);
+
+        ReplyDTO replyDTO = replyService.read(rno);
+        return replyDTO;
+
+    }
+
 
 }
