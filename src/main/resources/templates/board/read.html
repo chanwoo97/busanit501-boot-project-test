@@ -64,10 +64,10 @@
                         </div>
 
                         <div class="mb-3" th:with="link = ${pageRequestDTO.link}">
-<!--                           예시 url
-                                http://localhost:8080/board/update
-                                ?bno=12
-                                &page=1&keyword=1&type=twc-->
+                            <!--                           예시 url
+                                                            http://localhost:8080/board/update
+                                                            ?bno=12
+                                                            &page=1&keyword=1&type=twc-->
 
                             <a th:href="|@{/board/update}?bno=${dto.bno}&${link}|">
                                 <button type="button" class="btn btn-primary ">수정하기</button>
@@ -83,10 +83,40 @@
             </div>
 
         </div>
+    </div> <!--    end row-->
+<!--    댓글 작성 폼 화면-->
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <div class="my-4">
+                <button class="btn btn-info addReplyBtn">댓글 작성</button>
+            </div>
+
+            <!--    댓글 목록 화면-->
+            <ul class="list-group replyList">
+
+            </ul>
+        </div>
+
+    </div>
+    <!--    댓글 페이징 화면-->
+    <div class="row mt-3">
+        <div class="col">
+            <ul class="pagination replyPaging">
+
+            </ul>
+        </div>
     </div>
 
+<!--     비동기 통신 하기 위한 도구 설정, axios,-->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!--    우리가 만든 자바스크립 파일-->
+    <scrip src="/js/reply.js"></scrip>
 
-</div>
+</div> <!--fragment content end-->
+<script layout:fragment="script" th:inline="javascript">
+
+</script>
+
 
 
 </html>
