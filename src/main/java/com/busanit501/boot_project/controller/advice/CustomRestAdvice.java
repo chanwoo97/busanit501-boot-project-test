@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestControllerAdvice
 @Log4j2
@@ -43,7 +44,7 @@ public class CustomRestAdvice {
     // 데이터 무결성 참조 오류
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
-    public ResponseEntity<Map<String,String>> handleFKException(Exception e){
+    public ResponseEntity<Map<String,String>> handleFKException(DataIntegrityViolationException e){
         log.error(e);
 
         Map<String,String> errorMap = new HashMap<>();
@@ -55,5 +56,18 @@ public class CustomRestAdvice {
         return ResponseEntity.badRequest().body(errorMap);
 
     }
+
+    // NoSuchElement 예외처리,
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<Map<String,String>> handleNoSuchElementException(NoSuchElementException e){
+        log.error(e);
+        Map<String,String> errorMap = new HashMap<>();
+        errorMap.put("time","" +System.currentTimeMillis());
+        errorMap.put("msg",e.getMessage());
+        return ResponseEntity.badRequest().body(errorMap);
+    }
+
+
 
 }
