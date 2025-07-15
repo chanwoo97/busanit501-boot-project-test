@@ -247,6 +247,26 @@
         registerModal.hide()
     },false)
 
+    // 댓글의 내용을 담아서, 서버에 전달하기.
+    registerBtn.addEventListener("click", function (e) {
+        const replyObj = {
+            bno:bno,
+            replyText : replyText.value,
+            replyer : replyer.value
+        }
+        // 비동기 처리, reply.js 에서, addReply 이용하기.
+        addReply(replyObj).then(result => {
+            alert(result.rno)
+            registerModal.hide()
+            replyText.value = ""
+            replyer.value = ""
+            // 댓글 작성 후, 맨 마지막 페이지 이동.
+            printReplies(1,10, true)
+        }).catch(e => {
+            alert("예외가 발생했습니다.")
+        })
+    },false)
+
     // 참고하기.
     // console.log(get1(bno))
     // reply.js 에서, Promise 형태로 데이터를 받고서,
