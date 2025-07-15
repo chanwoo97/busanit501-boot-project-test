@@ -61,7 +61,7 @@ public class CustomRestAdvice {
     // NoSuchElement 예외처리,
     @ExceptionHandler({NoSuchElementException.class,
     EmptyResultDataAccessException.class})
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.EXPECTATION_FAILED)
     public ResponseEntity<Map<String,String>> handleNoSuchElementException(Exception e){
         log.error(e);
         Map<String,String> errorMap = new HashMap<>();
