@@ -1,18 +1,19 @@
 package com.busanit501.boot_project.controller;
 
+import com.busanit501.boot_project.dto.PageRequestDTO;
+import com.busanit501.boot_project.dto.PageResponseDTO;
 import com.busanit501.boot_project.dto.ReplyDTO;
 import com.busanit501.boot_project.service.ReplyService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,4 +66,18 @@ public class ReplyController {
 
         return resultMap;
     }
+
+    //댓글 목록 조회
+    // http://localhost:8080/replies/list/104
+    @Tag(name = "댓글 목록 조회", description = "댓글 목록 조회 레스트 버전 get 방식")
+    @GetMapping(value = "/list/{bno}")
+    public PageResponseDTO<ReplyDTO> getList(@PathVariable Long bno, PageRequestDTO pageRequestDTO) {
+        log.info("ReplyController에서 작업중, 전달받은 bno 확인 :  " + bno);
+
+        PageResponseDTO<ReplyDTO> responseDTO = replyService.getListOfBoard(bno, pageRequestDTO);
+        return responseDTO;
+
+    }
+
+
 }
