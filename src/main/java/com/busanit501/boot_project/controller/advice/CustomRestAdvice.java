@@ -2,6 +2,7 @@ package com.busanit501.boot_project.controller.advice;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;// 경로 주의,!!
@@ -58,9 +59,10 @@ public class CustomRestAdvice {
     }
 
     // NoSuchElement 예외처리,
-    @ExceptionHandler(NoSuchElementException.class)
+    @ExceptionHandler({NoSuchElementException.class,
+    EmptyResultDataAccessException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Map<String,String>> handleNoSuchElementException(NoSuchElementException e){
+    public ResponseEntity<Map<String,String>> handleNoSuchElementException(Exception e){
         log.error(e);
         Map<String,String> errorMap = new HashMap<>();
         errorMap.put("time","" +System.currentTimeMillis());
