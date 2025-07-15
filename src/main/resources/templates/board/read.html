@@ -115,6 +115,21 @@
 </div> <!--fragment content end-->
 <script layout:fragment="script" th:inline="javascript">
     const bno = [[${dto.bno}]]
+    function printReplies(page, size, goLast) {
+        //reply.js 에서 정의한, getList 함수를 사용해서, 비동기적으로 데이터를 전달 받기.
+        getList({bno,page,size,goLast}).then(
+            data => {console.log(data)}
+        ).catch(e => {
+            console.error(e)
+        })
+    }
+
+    // 함수 호출해보기
+    printReplies(1,10)
+
+
+
+    // 참고하기.
     // console.log(get1(bno))
     // reply.js 에서, Promise 형태로 데이터를 받고서,
     //     then, 절과, catch 절을 이용 가능.
@@ -122,13 +137,13 @@
     // get1(bno) : 순서1, 서버로부터 데이터 받기
     // .then( ) 절 : 순서2, 받은 데이터로 작업하기.
     // .catch() 절 : 순서3, 오류가 발생시 동작하는 블록.
-    get1(bno).then(
-        data => {
-            console.log(data)
-        }
-    ).catch(e => {
-        console.error(e)
-    })
+    // get1(bno).then(
+    //     data => {
+    //         console.log(data)
+    //     }
+    // ).catch(e => {
+    //     console.error(e)
+    // })
 </script>
 
 
