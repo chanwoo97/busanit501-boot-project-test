@@ -106,5 +106,21 @@ public class ReplyController {
 
     }
 
+    // 댓글 수정
+    // http://localhost:8080/replies/612
+    @Tag(name = "댓글 수정", description = "댓글 수정 레스트 버전 put 방식")
+    @DeleteMapping(value = "/{rno}")
+    public Map<String,Long> modify(@PathVariable Long rno,
+                                   @RequestBody ReplyDTO replyDTO) {
+        log.info("ReplyController에서 작업중, 수정, 전달받은 rno 확인 :  " + rno);
+
+        replyService.modify(replyDTO);
+        Map<String,Long> resultMap = new HashMap<>();
+        resultMap.put("rno",rno);
+
+        return resultMap;
+
+    }
+
 
 }
