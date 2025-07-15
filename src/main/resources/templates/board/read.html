@@ -115,7 +115,20 @@
 </div> <!--fragment content end-->
 <script layout:fragment="script" th:inline="javascript">
     const bno = [[${dto.bno}]]
-    console.log(get1(bno))
+    // console.log(get1(bno))
+    // reply.js 에서, Promise 형태로 데이터를 받고서,
+    //     then, 절과, catch 절을 이용 가능.
+    //     포맷 형태를 좀더 직관적이고, 쉽게 비동기를 동기적 스타일로 표현이 가능함.
+    // get1(bno) : 순서1, 서버로부터 데이터 받기
+    // .then( ) 절 : 순서2, 받은 데이터로 작업하기.
+    // .catch() 절 : 순서3, 오류가 발생시 동작하는 블록.
+    get1(bno).then(
+        data => {
+            console.log(data)
+        }
+    ).catch(e => {
+        console.error(e)
+    })
 </script>
 
 
