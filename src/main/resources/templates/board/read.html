@@ -324,6 +324,13 @@
             return
         }
 
+        // rno 부분 정의하기.
+        const rno = target.getAttribute("data-rno")
+
+        if(!rno) {
+            return;
+        }
+
         // reply.js 에 있는 함수 이용. getReply
         getReply(rno).then(reply => {
             console.log(reply)
