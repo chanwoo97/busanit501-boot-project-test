@@ -141,6 +141,40 @@
     <!--    모달창 테스트-->
     <!--    댓글 작성하는 모달 폼 창-->
 
+    <!--    댓글 수정하는 모달 폼 창, -->
+    <!--    모달창 테스트-->
+    <div class="modal modifyModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title replyHeader">댓글 수정폼</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            댓글 내용
+                        </span>
+                        <input type="text" class="form-control modifyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            작성자
+                        </span>
+                        <input type="text" class="form-control modifyReplyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary modifyBtn">수정하기</button>
+                    <button type="button" class="btn btn-danger removeBtn">삭제하기</button>
+                    <button type="button" class="btn btn-secondary closeModifyBtn" data-bs-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    모달창 테스트-->
+    <!--    댓글 수정하는 모달 폼 창-->
+
     <!--     비동기 통신 하기 위한 도구 설정, axios,-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <!--    우리가 만든 자바스크립 파일, 임포트 : 불러오기-->
@@ -266,6 +300,41 @@
             alert("예외가 발생했습니다.")
         })
     },false)
+
+
+    // 수정하는 요소 선택 및, 이벤트 처리 작업.
+    cosnt modifyModal = new bootstrap.Modal(document.querySelector(".modifyModal"))
+
+    const replyHeader = document.querySelector(".replyHeader")
+    const modifyText = document.querySelector(".modifyText")
+    const modifyReplyer = document.querySelector(".modifyReplyer")
+    const modifyBtn = document.querySelector(".modifyBtn")
+    const removeBtn = document.querySelector(".removeBtn")
+    const closeModifyBtn = document.querySelector(".closeModifyBtn")
+
+
+    // 댓글 목록에서, 댓글 클릭시, 댓글 상세보기 화면 이동 이벤트 작업.
+    replyList.addEventListener("click", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target
+
+        if(!target || target.tagName != 'SPAN') {
+            return
+        }
+
+        // reply.js 에 있는 함수 이용. getReply
+        getReply(rno).then(reply => {
+            console.log(reply)
+            replyHeader.innerHTML = reply.rno
+            modifyText.value = reply.replyText
+            modifyReplyer.value = reply.replyer
+            modifyModal.show()
+
+        }).catch(e => alert("예외 발생."))
+    })
+
 
 
     // 댓글 페이지 번호 클릭시 이동 이벤트 작업.
