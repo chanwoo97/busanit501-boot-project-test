@@ -250,7 +250,7 @@
     // 댓글의 내용을 담아서, 서버에 전달하기.
     registerBtn.addEventListener("click", function (e) {
         const replyObj = {
-            bno:bno,
+            bno : bno,
             replyText : replyText.value,
             replyer : replyer.value
         }
@@ -265,6 +265,24 @@
         }).catch(e => {
             alert("예외가 발생했습니다.")
         })
+    },false)
+
+
+    // 댓글 페이지 번호 클릭시 이동 이벤트 작업.
+    let page = 1
+    let size = 10
+    replyPaging.addEventListener("click", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        const target = e.target
+
+        if(!target || target.tagName != 'A') {
+            return
+        }
+        const pageNum = target.getAttribute("data-page")
+        page = pageNum
+        printReplies(page,size)
     },false)
 
     // 참고하기.
