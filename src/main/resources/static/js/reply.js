@@ -25,5 +25,13 @@ async function get1(bno) {
 async function getList({bno, page, size, goLast}){
     const result = await axios.get(`/replies/list/${bno}`,
         {params : {page,size}})
+
+    // 댓글의 마지막 가는 여부를 체크해서, 가장 맨끝에 바로가기,
+    if(goLast) {
+        const total = result.data.total
+        const lastPage = parseInt(Math.ceil(total/size))
+        return getList({bno:bno,page:lastPage, size:size})
+    }
+
     return result.data
 }
