@@ -84,7 +84,7 @@
 
         </div>
     </div> <!--    end row-->
-<!--    댓글 작성 폼 화면-->
+    <!--    댓글 작성 폼 화면-->
     <div class="row mt-3">
         <div class="col-md-12">
             <div class="my-4">
@@ -101,16 +101,49 @@
     <!--    댓글 페이징 화면-->
     <div class="row mt-3">
         <div class="col">
-<!--            <ul class="pagination replyPaging">-->
+            <!--            <ul class="pagination replyPaging">-->
             <ul class="pagination flex-wrap justify-content-center replyPaging">
 
             </ul>
         </div>
     </div>
 
-<!--     비동기 통신 하기 위한 도구 설정, axios,-->
+    <!--    댓글 작성하는 모달 폼 창, list.html에 있는 테스트 모달창 가져오기-->
+    <!--    모달창 테스트-->
+    <div class="modal registerModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">댓글 작성폼</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            댓글 내용
+                        </span>
+                        <input type="text" class="form-control replyText">
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            작성자
+                        </span>
+                        <input type="text" class="form-control replyer">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary registerBtn">등록하기</button>
+                    <button type="button" class="btn btn-secondary closeRegBtn" data-bs-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    모달창 테스트-->
+    <!--    댓글 작성하는 모달 폼 창-->
+
+    <!--     비동기 통신 하기 위한 도구 설정, axios,-->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<!--    우리가 만든 자바스크립 파일, 임포트 : 불러오기-->
+    <!--    우리가 만든 자바스크립 파일, 임포트 : 불러오기-->
     <script src="/js/reply.js"></script>
 
 </div> <!--fragment content end-->
@@ -120,13 +153,13 @@
     const replyList = document.querySelector('.replyList')// 댓글 목록 가리킴
     const replyPaging = document.querySelector('.replyPaging') // 댓글의 페이징 가리킴
 
-   // 댓글 목록 출력 함수.  UI 작성,
+    // 댓글 목록 출력 함수.  UI 작성,
     // 자바스크립트로 이너 HTML 이용해서, 문자열로, 태그를 생성해서 주입할 예정.
     // dtoList, 서버로부터 전달 받은 , 댓글 데이터들.
     function printList(dtoList) {
         let str = '';
-        if(dtoList && dtoList.length >0 ) {
-            for(const dto of dtoList) {
+        if (dtoList && dtoList.length > 0) {
+            for (const dto of dtoList) {
                 // str 문자열 변수 안에, li 태그를 문자열 형태로 주입함.
                 str += `
                         <li class="list-group-item d-flex replyItem">
@@ -143,25 +176,25 @@
 
     // 2 댓글 페이징 화면 출력 함수.  UI 작성,
     // 자바스크립트로 이너 HTML 이용해서, 문자열로, 태그를 생성해서 주입할 예정.
-    function printPages(data){
+    function printPages(data) {
         let pageStr = ``
 
-        if(data.prev) {
+        if (data.prev) {
             pageStr += `
-        <li class="page-item"><a class="page-link" data-page="${data.start -1 }">Prev</a></li>
+        <li class="page-item"><a class="page-link" data-page="${data.start - 1}">Prev</a></li>
             `
         }
 
         // 페이징 1,2,3,4,5,6,7,8,9,10 출력.
-        for(let i = data.start; i <= data.end; i++) {
+        for (let i = data.start; i <= data.end; i++) {
             pageStr += `
-            <li class="page-item ${i == data.page ? "active":""}"><a class="page-link" data-page="${i}">${i}</a></li>
+            <li class="page-item ${i == data.page ? "active" : ""}"><a class="page-link" data-page="${i}">${i}</a></li>
             `
         }
 
-        if(data.next) {
+        if (data.next) {
             pageStr += `
-        <li class="page-item"><a class="page-link" data-page="${data.end + 1 }">Next</a></li>
+        <li class="page-item"><a class="page-link" data-page="${data.end + 1}">Next</a></li>
             `
         }
         replyPaging.innerHTML = pageStr
@@ -174,7 +207,7 @@
     // 2) 목록 페이징을 출력하는 UI 작성하는 함수에 적용
     function printReplies(page, size, goLast) {
         //reply.js 에서 정의한, getList 함수를 사용해서, 비동기적으로 데이터를 전달 받기.
-        getList({bno,page,size,goLast}).then(
+        getList({bno, page, size, goLast}).then(
             // 처음에는 , 데이터 받느지 유무를 확인하기위해서, 콘솔에 출력
             // 두번째, 실제 화면에 적용하기.
             // data => {console.log(data)}
@@ -192,9 +225,27 @@
     // printReplies(1,10)
 
     // 댓글의 마지막 페이지 이동
-    printReplies(1,10,true)
+    printReplies(1, 10, true)
 
 
+
+    // 댓글 등록 모달 작업.
+    const registerModal = new bootstrap.Modal(document.querySelector(".registerModal"))
+
+    // 나머지, UI 요소 선택자 지정 해놓기.
+    const registerBtn = document.querySelector(".registerBtn")
+    const replyText = document.querySelector(".replyText")
+    const replyer = document.querySelector(".replyer")
+    const closeRegBtn = document.querySelector(".closeRegBtn")
+
+    // 이벤트 처리 작업들.
+    document.querySelector(".addReplyBtn").addEventListener("click", function (e) {
+        registerModal.show()
+    },false)
+
+    closeRegBtn.addEventListener("click", function (e) {
+        registerModal.hide()
+    },false)
 
     // 참고하기.
     // console.log(get1(bno))
@@ -212,7 +263,6 @@
     //     console.error(e)
     // })
 </script>
-
 
 
 </html>
