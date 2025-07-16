@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -195,7 +196,9 @@ public class BoardRepositoryTests {
 
     // Lazy 로딩 확인 해보기.
     // 게시글 하나 조회시, 여기에 첨부된 이미지들도 조회를 하는 부분,
+
     @Test
+    @Transactional
     public void testReadWithImages() {
         // 실제로 존재하는 이미지가 있는 게시글 확인.
         Optional<Board> result = boardRepository.findById(113L);
