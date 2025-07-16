@@ -25,7 +25,8 @@ public class Board extends BaseEntity {
 
     //연관관계 설정1,
     @OneToMany(mappedBy = "board", cascade = {CascadeType.ALL}
-    ,fetch = FetchType.LAZY) // BoardImage 의 board 변수를 가리킴
+    ,fetch = FetchType.LAZY,
+    orphanRemoval = true) // BoardImage 의 board 변수를 가리킴
     @Builder.Default
     private Set<BoardImage>  imageSet = new HashSet<>();
 
