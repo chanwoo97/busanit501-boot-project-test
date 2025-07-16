@@ -12,5 +12,5 @@ public interface ReplyRepository extends JpaRepository<Reply,Long> {
     Page<Reply> listOfBoard(Long bno, Pageable pageable);
 
     // 게시글 번호로, 댓글 삭제하기.
-    void deleteByBoard(Long bno);
+    void deleteByBoard_Bno(Long bno);
 }
