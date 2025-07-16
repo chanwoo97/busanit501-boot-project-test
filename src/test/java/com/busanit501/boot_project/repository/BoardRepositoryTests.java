@@ -251,7 +251,7 @@ public class BoardRepositoryTests {
     @Commit
     public void testRemoveAll() {
         // 실제로 삭제할 디비, 113L
-        replyRepository.deleteByBoard(113L);
+        replyRepository.deleteByBoard_Bno(113L);
         boardRepository.deleteById(113L);
     }
 
