@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -211,6 +212,34 @@ public class BoardRepositoryTests {
         for(BoardImage boardImage : board.getImageSet()) {
             log.info("첨부 이미지 확인 :  "+boardImage);
         }
+    }
+
+    //첨부된 이미지를 수정해보기, 고아 객체들의 처리 유무에 확인.
+    @Test
+    @Transactional
+    @Commit
+    public void testModifyImages() {
+        // 게시글1 에 첨부이미지 , img1.jpg, img2.jpg, img3.jpg
+        // 수정
+        // 게시글1 에 첨부이미지 변경, test1.jpg, test2.jpg, test3.jpg 수정함.
+        // 기존 첨부 이미지 :  img1.jpg, img2.jpg, img3.jpg , 어떻게 될까요?
+        // 실제 디비에도 기록이 된 상태.
+        // 상황이, 부모인 게시글1이 없어진 상태 : 고아 객체.
+        // 스프링에서, 고아 객체, 가비지 컬렉션이 알아서 자동 수거 하게 하면 됨.
+
+        // 실제 각자 디비에 있는 더미 데이터로 확인 .
+       Optional<Board> result =  boardRepository.findByIdWithImages(113L);
+       Board board = result.orElseThrow();
+
+       // 기존 보드에 첨부된 이미지를 , 클리어 하고,
+        board.clearImages();
+
+        // 새로운 첨부 이미지들로 교체
+        for(int i = 0; i < 3; i++) {
+            board.addImage(UUID.randomUUID().toString(),"Update-file"+i+".jpg");
+        }
+        boardRepository.save(board);
+
     }
 
 
