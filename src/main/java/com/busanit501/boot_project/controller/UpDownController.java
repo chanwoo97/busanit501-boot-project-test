@@ -4,11 +4,14 @@ import com.busanit501.boot_project.dto.upload.UploadFileDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
@@ -35,6 +38,15 @@ public class UpDownController {
                 Path savePath = Paths.get(uploadPath, uuid+"_"+originalName);
                 try {
                     multipartFile.transferTo(savePath); // 실제 파일 저장.
+
+                    // 만약, 업로드한 파일이 이미지이면, 썸네일 이미지로 변환하기.
+                    if(Files.probeContentType(savePath).startsWith("image")) {
+                        // 썸네일 변환하기.
+                        File thumbFile = new File(uploadPath,"s_" + uuid+"_"+originalName);
+                        // 썸네일 변환 도구 이용.
+                        Thumbnailator.createThumbnail(savePath.toFile(), thumbFile, 200,200);
+                    }
+
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
