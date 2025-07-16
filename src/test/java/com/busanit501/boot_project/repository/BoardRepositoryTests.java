@@ -193,5 +193,16 @@ public class BoardRepositoryTests {
         boardRepository.save(board);
     }
 
+    // Lazy 로딩 확인 해보기.
+    // 게시글 하나 조회시, 여기에 첨부된 이미지들도 조회를 하는 부분,
+    @Test
+    public void testReadWithImages() {
+        // 실제로 존재하는 이미지가 있는 게시글 확인.
+        Optional<Board> result = boardRepository.findById(113L);
+        Board board = result.orElseThrow();
+        log.info("testReadWithImages에서 : 확인 board " + board);
+        log.info("board의 이미지들 확인 : " + board.getImageSet());
+    }
+
 
 }
