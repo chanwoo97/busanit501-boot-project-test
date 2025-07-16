@@ -25,6 +25,10 @@ public class BoardRepositoryTests {
     @Autowired
     private BoardRepository boardRepository;
 
+    // 추가로, 게시글 삭제시, 댓글도 같이 삭제하려면, 도움을 받기, 외주주기, 의존하기.포함하기.
+    @Autowired
+    private ReplyRepository replyRepository;
+
     //JpaRepository 를 이용해서, 기본 crud 확인.
     // sql 를 따로 몰라도, 자바의 메서드만 호출해서, sql 전달하기.
     // 1 insert 확인,
@@ -236,11 +240,19 @@ public class BoardRepositoryTests {
 
         // 새로운 첨부 이미지들로 교체
         for(int i = 0; i < 3; i++) {
-            board.addImage(UUID.randomUUID().toString(),"Update-file"+i+".jpg");
+            board.addImage(UUID.randomUUID().toString(),"Update-file-2"+i+".jpg");
         }
         boardRepository.save(board);
 
     }
 
+    @Test
+    @Transactional
+    @Commit
+    public void testRemoveAll() {
+        // 실제로 삭제할 디비, 113L
+        replyRepository.deleteByBoard(113L);
+        boardRepository.deleteById(113L);
+    }
 
 }
