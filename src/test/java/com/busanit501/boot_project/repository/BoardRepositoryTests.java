@@ -203,7 +203,8 @@ public class BoardRepositoryTests {
     @Transactional
     public void testReadWithImages() {
         // 실제로 존재하는 이미지가 있는 게시글 확인.
-        Optional<Board> result = boardRepository.findById(113L);
+//        Optional<Board> result = boardRepository.findById(113L);
+        Optional<Board> result = boardRepository.findByIdWithImages(113L);
         Board board = result.orElseThrow();
         log.info("testReadWithImages에서 : 확인 board " + board);
 //        log.info("board의 이미지들 확인 : " + board.getImageSet());
