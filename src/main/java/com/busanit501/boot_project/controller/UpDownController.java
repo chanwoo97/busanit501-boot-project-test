@@ -9,6 +9,10 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+
 @RestController
 @Log4j2
 public class UpDownController {
@@ -25,8 +29,17 @@ public class UpDownController {
         if(uploadFileDTO.getFiles() != null && uploadFileDTO.getFiles().size() > 0) {
             uploadFileDTO.getFiles().forEach(multipartFile -> {
                 log.info("업로드한 파일명 : "+multipartFile.getOriginalFilename());
-            });
-        }
+                String originalName = multipartFile.getOriginalFilename();
+                // 업로드한 파일명, 중복 방지, UUID사용하기.
+                String uuid = UUID.randomUUID().toString();
+                Path savePath = Paths.get(uploadPath, uuid+"_"+originalName);
+                try {
+                    multipartFile.transferTo(savePath); // 실제 파일 저장.
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }); // end for each
+        } // end if
 
         return null;
     }
