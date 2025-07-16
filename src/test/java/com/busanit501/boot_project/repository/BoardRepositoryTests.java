@@ -1,6 +1,7 @@
 package com.busanit501.boot_project.repository;
 
 import com.busanit501.boot_project.domain.Board;
+import com.busanit501.boot_project.domain.BoardImage;
 import com.busanit501.boot_project.dto.BoardListReplyCountDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -192,6 +193,7 @@ public class BoardRepositoryTests {
             board.addImage(UUID.randomUUID().toString(),"file"+i+".jpg");
         }
         boardRepository.save(board);
+//        boardRepository.save(boardImage);
     }
 
     // Lazy 로딩 확인 해보기.
@@ -204,7 +206,10 @@ public class BoardRepositoryTests {
         Optional<Board> result = boardRepository.findById(113L);
         Board board = result.orElseThrow();
         log.info("testReadWithImages에서 : 확인 board " + board);
-        log.info("board의 이미지들 확인 : " + board.getImageSet());
+//        log.info("board의 이미지들 확인 : " + board.getImageSet());
+        for(BoardImage boardImage : board.getImageSet()) {
+            log.info("첨부 이미지 확인 :  "+boardImage);
+        }
     }
 
 
