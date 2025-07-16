@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 @SpringBootTest
@@ -174,6 +175,22 @@ public class BoardRepositoryTests {
         List<BoardListReplyCountDTO> todoList = result.getContent();
         log.info("디비에서 페이징된 조회될 데이터 10개 : todoList  : ");
         todoList.forEach(board -> log.info(board));
+    }
+
+    // 첨부된 이미지 포함해서, 게시글 작성
+    @Test
+    public void testInsertWithImages() {
+        // 더미 데이터 만들기.
+        Board board = Board.builder()
+                .title("첨부 이미지 추가한 게시글 테스트")
+                .content("첨부 파일 추가해서 게시글 작성 테스트")
+                .writer("이상용")
+                .build();
+        // 더미 데이터2, 첨부 이미지
+        for(int i = 0; i < 3; i++) {
+            board.addImage(UUID.randomUUID().toString(),"file"+i+".jpg");
+        }
+        boardRepository.save(board);
     }
 
 
