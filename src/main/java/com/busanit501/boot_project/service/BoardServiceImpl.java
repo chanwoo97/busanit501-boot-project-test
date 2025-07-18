@@ -2,10 +2,7 @@ package com.busanit501.boot_project.service;
 
 
 import com.busanit501.boot_project.domain.Board;
-import com.busanit501.boot_project.dto.BoardDTO;
-import com.busanit501.boot_project.dto.BoardListReplyCountDTO;
-import com.busanit501.boot_project.dto.PageRequestDTO;
-import com.busanit501.boot_project.dto.PageResponseDTO;
+import com.busanit501.boot_project.dto.*;
 import com.busanit501.boot_project.repository.BoardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -131,5 +128,12 @@ public class BoardServiceImpl implements BoardService{
                 .dtoList(result.getContent())
                 .total((int)result.getTotalElements())
                 .build();
+    }
+
+    // 기존 , 1) 페이징 2) 검색 3) 댓글 갯수 , 버전으로 목록 출력. 4) 첨부 이미지들
+    // 참고로 위에는 1) ~ 3) 구현이 된 상태임. 4) 번만 추가
+    @Override
+    public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
+        return null;
     }
 }
