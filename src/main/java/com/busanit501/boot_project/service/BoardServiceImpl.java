@@ -31,7 +31,10 @@ public class BoardServiceImpl implements BoardService{
     public Long register(BoardDTO boardDTO) {
         // 변환 먼저하기.
         log.info("보드 서비스 구현체, 등록 과정 중에 변환된 boardDTO 확인 : " + boardDTO);
-        Board board = modelMapper.map(boardDTO, Board.class);
+        // 이전 버전
+//        Board board = modelMapper.map(boardDTO, Board.class);
+        // 보드 서비스의 디폴트 메서드 이용해서, 변환하기. dtoToEntity
+        Board board = dtoToEntity(boardDTO);
         log.info("보드 서비스 구현체, 등록 과정 중에 변환된 board 확인 : " + board);
         // 실제 디비에 쓰기 작업.
         Long bno = boardRepository.save(board).getBno();

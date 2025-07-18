@@ -287,14 +287,14 @@ public class BoardRepositoryTests {
         // 2) 검색 정보 더미 데이터 ,
         // 검색시 사용할, 더미 데이터 준비물
         // 1)
-        String[] types = {"t","c","w"};
+        String[] types = {"t"};
         //검색어
-        String keyword = "용";
+        String keyword = "1";
 
         // 1차로, 첨부 이미지들이 나타 나는지 확인용 테스트
 //        boardRepository.searchWithAll(null,null,pageable);
         //2차테스트
-        Page< BoardListAllDTO> result = boardRepository.searchWithAll(null, null, pageable);
+        Page< BoardListAllDTO> result = boardRepository.searchWithAll(types, keyword, pageable);
         // 페이징 정보들, 페이징 처리가 된 디비 조회 결과 내역이 있음.
         log.info("========testSearchImageReplyCount: 2차 확인 테스트 ==================");
         log.info("=====전체갯수==========result.getTotalElements()확인, ");

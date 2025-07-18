@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Arrays;
+import java.util.UUID;
+
 @SpringBootTest
 @Log4j2
 public class BoardServiceTests {
@@ -78,5 +81,30 @@ public class BoardServiceTests {
         log.info("서비스 테스트 작업 중2, responseDTO : " + responseDTO);
 
     }
+
+    // 게시글 + 첨부 이미지
+    @Test
+    public void testRegisterWithImages() {
+        log.info("서비스 단위테스트에서, 이미지 포함 게시글 작성 테스트 중. ");
+        // 더미 데이터 준비물 준비 작업
+        BoardDTO boardDTO = BoardDTO.builder()
+                .title("오늘 점심 뭐 먹지? 이미지 첨부용")
+                .content("도시락? 라면? 뭐 먹지??")
+                .writer("이상용")
+                .build();
+        //더미 첨부 이미지 추가
+        boardDTO.setFileNames(
+                Arrays.asList(
+                        UUID.randomUUID()+"_aaa.jpg",
+                        UUID.randomUUID()+"_bbb.jpg",
+                        UUID.randomUUID()+"_ccc.jpg"
+                )
+        );
+
+        // 실제 디비에 반영하기.
+        Long bno = boardService.register(boardDTO);
+        log.info("등록된 게시글 번호 확인: " + bno);
+    }
+
 
 }
