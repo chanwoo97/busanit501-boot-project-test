@@ -121,6 +121,11 @@ public class BoardServiceTests {
         }
     }
 
+    @Test
+    public void testRemoveAll() {
+        Long bno = 201L;
+        boardService.remove(bno);
+    }
 
 
 
