@@ -3,6 +3,7 @@ package com.busanit501.boot_project.repository.search;
 import com.busanit501.boot_project.domain.Board;
 import com.busanit501.boot_project.domain.QBoard;
 import com.busanit501.boot_project.domain.QReply;
+import com.busanit501.boot_project.dto.BoardImageDTO;
 import com.busanit501.boot_project.dto.BoardListAllDTO;
 import com.busanit501.boot_project.dto.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
@@ -220,7 +221,15 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
                     .replyCount(replyCount)
                     .build();
             // 추가로 ,첨부된 이미지 목록을 여기 붙이기 작업 예정.
-
+            // BoardImage : 엔티티 클래스 -> BoardImageDTO 처리 하기. 형변환
+            List<BoardImageDTO> imageDTOS = board1.getImageSet().stream()
+                    .sorted().map(boardImage -> BoardImageDTO.builder()
+                            .uuid(boardImage.getUuid())
+                            .fileName(boardImage.getFileName())
+                            .ord(boardImage.getOrd())
+                            .build()).collect(Collectors.toList());
+            dto.setBoardImages(imageDTOS);
+            // 추가로 ,첨부된 이미지 목록을 여기 붙이기 작업 예정.
             return dto;
         }).collect(Collectors.toList());
 
@@ -229,19 +238,6 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         return new PageImpl<>(dtoList,pageable,totalCount);
 
 
-        //순서5, 임시 확인용.
-//        List<Board> boardList = boardJPQLQuery.fetch();
 
-        // 확인.
-        // 게시글에 첨부된 이미지 확인용
-//        boardList.forEach(board1 -> {
-//            log.info("===searchWithAll: 레포지토리 작업 중. ===============");
-//            log.info(board1.getBno().toString());
-//            log.info(board1.getImageSet());
-//            log.info("=========================");
-//        });
-
-
-//        return null;
     }
 }

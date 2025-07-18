@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 public class BoardImageDTO {
     private String uuid;
     private String fileName;
-    private String ord;
+    private int ord;
 }
