@@ -40,10 +40,13 @@ public class BoardServiceTests {
 
     @Test
     public void testModify() {
-        // 수정할 실제 데이터 이용, 102L
-        BoardDTO boardDTO = boardService.readOne(102L);
+        // 수정할 실제 데이터 이용, 201L
+        BoardDTO boardDTO = boardService.readOne(201L);
         boardDTO.setTitle("수정2 테스트 ");
         boardDTO.setContent("오늘 점심 뭐 먹지 ??");
+
+        // 첨부 파일 추가.
+        boardDTO.setFileNames(Arrays.asList(UUID.randomUUID()+"_apple.jpg"));
 
         boardService.modify(boardDTO);
     }
@@ -117,6 +120,8 @@ public class BoardServiceTests {
             log.info("첨부된 이미지 확인 : " + fileName);
         }
     }
+
+
 
 
 }
