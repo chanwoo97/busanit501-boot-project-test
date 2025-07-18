@@ -255,4 +255,24 @@ public class BoardRepositoryTests {
         boardRepository.deleteById(113L);
     }
 
+    @Test
+    public void testInsertAll() {
+        for(int i = 1; i <= 100; i++) {
+            Board board = Board.builder()
+                    .title("제목... " + i)
+                    .content("내용... " +i)
+                    .writer("사용자..." + i)
+                    .build();
+            // 1게시글 당, 첨부 이미지 3장씩 더미로 작성
+            //
+            for (int j = 0; j < 3; j++) {
+                if(i % 5 == 0) {
+                    continue;
+                } //end if
+                board.addImage(UUID.randomUUID().toString(),i+ "file"+j+".jpg");
+            } // 안쪽 end for
+            boardRepository.save(board);
+        }// 바깥쪽 end for
+    }
+
 }
