@@ -153,6 +153,19 @@ public class BoardServiceImpl implements BoardService {
     // 참고로 위에는 1) ~ 3) 구현이 된 상태임. 4) 번만 추가
     @Override
     public PageResponseDTO<BoardListAllDTO> listWithAll(PageRequestDTO pageRequestDTO) {
-        return null;
+        // 검색
+        String[] types = pageRequestDTO.getTypes();
+        String keyword = pageRequestDTO.getKeyword();
+        // 페이징 정보
+        Pageable pageable = pageRequestDTO.getPageable("bno");
+
+        // 준비물을 이용해서, 레포지토리에게 외주주기, 디비에서 데이터 가져오기 작업.
+        Page<BoardListAllDTO>result = boardRepository.searchWithAll(types, keyword, pageable);
+
+        return PageResponseDTO.<BoardListAllDTO>withAll()
+                .pageRequestDTO(pageRequestDTO)
+                .dtoList(result.getContent())
+                .total((int) result.getTotalElements())
+                .build();
     }
 }

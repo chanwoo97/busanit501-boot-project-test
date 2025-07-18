@@ -1,15 +1,13 @@
 package com.busanit501.boot_project.service;
 
-import com.busanit501.boot_project.dto.BoardDTO;
-import com.busanit501.boot_project.dto.BoardListReplyCountDTO;
-import com.busanit501.boot_project.dto.PageRequestDTO;
-import com.busanit501.boot_project.dto.PageResponseDTO;
+import com.busanit501.boot_project.dto.*;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 @SpringBootTest
@@ -127,6 +125,27 @@ public class BoardServiceTests {
         boardService.remove(bno);
     }
 
+    @Test
+    public void testListWithAll() {
+        // 더미 데이터 준비물 작업.
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .build();
+        PageResponseDTO<BoardListAllDTO> responseDTO = boardService.listWithAll(pageRequestDTO);
+        List<BoardListAllDTO> dtoList = responseDTO.getDtoList();
+        dtoList.forEach(dto -> {
+            log.info("dto : " + dto);
+            log.info("dto 의 제목 : " + dto.getTitle());
+
+            // 첨부 이미지들 조회
+            if(dto.getBoardImages() != null && dto.getBoardImages().size() > 0){
+                for (BoardImageDTO boardImageDTO : dto.getBoardImages()) {
+                    log.info("boardImageDTO : " + boardImageDTO);
+                }
+            }
+        });
+    }
 
 
 }
