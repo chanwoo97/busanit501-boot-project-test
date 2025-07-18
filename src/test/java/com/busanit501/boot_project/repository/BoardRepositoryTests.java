@@ -284,6 +284,13 @@ public class BoardRepositoryTests {
         // 조회시 필요한 더미 데이터 준비물 1) 페이징 정보 2) 검색 정보
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
 
+        // 2) 검색 정보 더미 데이터 ,
+        // 검색시 사용할, 더미 데이터 준비물
+        // 1)
+        String[] types = {"t","c","w"};
+        //검색어
+        String keyword = "용";
+
         // 1차로, 첨부 이미지들이 나타 나는지 확인용 테스트
 //        boardRepository.searchWithAll(null,null,pageable);
         //2차테스트
