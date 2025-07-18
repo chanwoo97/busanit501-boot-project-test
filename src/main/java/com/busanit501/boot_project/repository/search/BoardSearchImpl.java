@@ -186,6 +186,35 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         // left join,-> 게시글의 댓글이 없는 경우도 표기해야함. 그래서, 사용함.
         boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));
 
+        //------------검색조건, 위의 메서드에서 가져오기.--------------------
+        // 순서4, 옵션
+        // where 조건절 추가. 위의 내용 재사용.
+        // where 조건절 , BooleanBuilder 를 이용해서 조건 추가.
+        // select .. from board where ....
+        if ((types != null && types.length > 0) && keyword != null) {
+            // or , 조건, and 조건을 사용하기 싶다. 묶기도 쉽다.
+            BooleanBuilder builder = new BooleanBuilder();
+            // types = {"t","w","c"}
+            for(String type : types){
+                switch (type) {
+                    case "t":
+                        builder.or(board.title.contains(keyword));
+                        break;
+                    case "c":
+                        builder.or(board.content.contains(keyword));
+                        break;
+                    case "w":
+                        builder.or(board.writer.contains(keyword));
+                        break;
+                } // end switch
+            } // end for
+            boardJPQLQuery.where(builder); // select * from board where like %keyword%
+        } //end if
+        // bno >0 조건 추가히기.
+        boardJPQLQuery.where(board.bno.gt(0L));
+
+        //--------------검색조건, 위의 메서드에서 가져오기.------------------------------------------------
+
         // 순서3-2
         boardJPQLQuery.groupBy(board);
 
