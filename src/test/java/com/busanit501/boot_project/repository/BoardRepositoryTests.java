@@ -2,6 +2,7 @@ package com.busanit501.boot_project.repository;
 
 import com.busanit501.boot_project.domain.Board;
 import com.busanit501.boot_project.domain.BoardImage;
+import com.busanit501.boot_project.dto.BoardListAllDTO;
 import com.busanit501.boot_project.dto.BoardListReplyCountDTO;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -282,7 +283,17 @@ public class BoardRepositoryTests {
     public void testSearchImageReplyCount() {
         // 조회시 필요한 더미 데이터 준비물 1) 페이징 정보 2) 검색 정보
         Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
-        boardRepository.searchWithAll(null,null,pageable);
+
+        // 1차로, 첨부 이미지들이 나타 나는지 확인용 테스트
+//        boardRepository.searchWithAll(null,null,pageable);
+        //2차테스트
+        Page< BoardListAllDTO> result = boardRepository.searchWithAll(null, null, pageable);
+        // 페이징 정보들, 페이징 처리가 된 디비 조회 결과 내역이 있음.
+        log.info("========testSearchImageReplyCount: 2차 확인 테스트 ==================");
+        log.info("=====전체갯수==========result.getTotalElements()확인, ");
+        log.info(result.getTotalElements());
+        log.info("=====페이징 처리가 된 디비 조회 결과 내역==========result.getContent()확인, ");
+        result.getContent().forEach(board -> log.info(board));
     }
 
 
