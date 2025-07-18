@@ -7,6 +7,7 @@ import com.busanit501.boot_project.dto.BoardListReplyCountDTO;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPQLQuery;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import java.util.List;
 
 // 인터페이스이름 + Impl, 이름 규칙, 동일하게 작성,
 // QuerydslRepositorySupport : 부모클래스, Querydsl 사용하기 위한 도구함.
+@Log4j2
 public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardSearch {
 
     public BoardSearchImpl() {
@@ -165,5 +167,36 @@ public class BoardSearchImpl extends QuerydslRepositorySupport implements BoardS
         long count = dtoQuery.fetchCount();
 
         return new PageImpl<>(dtoList,pageable,count);
+    }
+
+    @Override
+    public Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable) {
+        // 순서1, 고정
+        QBoard board = QBoard.board; // (board)
+        QReply reply = QReply.reply; // (reply)
+        // 순서2, 고정
+        JPQLQuery<Board> boardJPQLQuery = from(board); // select .. from board
+
+        // 순서3,
+        // left join,-> 게시글의 댓글이 없는 경우도 표기해야함. 그래서, 사용함.
+        boardJPQLQuery.leftJoin(reply).on(reply.board.eq(board));
+
+        // 순서4,
+        // 페이징 적용.
+        getQuerydsl().applyPagination(pageable,boardJPQLQuery);
+
+        //순서5,
+        List<Board> boardList = boardJPQLQuery.fetch();
+
+        // 확인.
+        boardList.forEach(board1 -> {
+            log.info("===searchWithAll: 레포지토리 작업 중. ===============");
+            log.info(board1.getBno().toString());
+            log.info(board1.getImageSet());
+            log.info("=========================");
+        });
+
+
+        return null;
     }
 }

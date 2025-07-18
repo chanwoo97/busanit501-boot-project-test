@@ -275,4 +275,15 @@ public class BoardRepositoryTests {
         }// 바깥쪽 end for
     }
 
+    // 조회시 : 1)페이징 정보 2) 검색 정보 3) 댓글 갯수 정보 4) 첨부 이미지 정보 포함해서
+    // 레포지토리 목록 조회 확인 테스트.
+    @Transactional
+    @Test
+    public void testSearchImageReplyCount() {
+        // 조회시 필요한 더미 데이터 준비물 1) 페이징 정보 2) 검색 정보
+        Pageable pageable = PageRequest.of(0,10, Sort.by("bno").descending());
+        boardRepository.searchWithAll(null,null,pageable);
+    }
+
+
 }

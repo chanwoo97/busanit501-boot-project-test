@@ -15,4 +15,8 @@ public interface BoardSearch {
 
     // 3, 2번 정보 포함 + 댓글 갯수 추가.
     Page<BoardListReplyCountDTO> searchWithReplyCount(String[] types, String keyword, Pageable pageable);
+
+    //4, 3번 정보 포함 + 첨부이미지  추가.
+    Page<BoardListReplyCountDTO> searchWithAll(String[] types, String keyword, Pageable pageable);
 }
+
