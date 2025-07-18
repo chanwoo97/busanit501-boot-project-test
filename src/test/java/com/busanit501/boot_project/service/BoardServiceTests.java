@@ -106,5 +106,17 @@ public class BoardServiceTests {
         log.info("등록된 게시글 번호 확인: " + bno);
     }
 
+    @Test
+    public void testReadAll() {
+        // 조회할 실제 디비 확인.
+        Long bno = 201L;
+        BoardDTO boardDTO = boardService.readOne(bno);
+        log.info("서비스 단윈 테스트에서, testReadAll, boardDTO : " + boardDTO);
+        // 첨부된 이미지 들도 확인
+        for(String fileName : boardDTO.getFileNames()){
+            log.info("첨부된 이미지 확인 : " + fileName);
+        }
+    }
+
 
 }

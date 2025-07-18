@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Log4j2
 @RequiredArgsConstructor
 @Transactional()
-public class BoardServiceImpl implements BoardService{
+public class BoardServiceImpl implements BoardService {
     // 화면에서 전달 받은 데이터 DTO를 , 엔티티 클래스 타입으로 변환해서,
     // repository 에게 외주 주는 업무.
     private final ModelMapper modelMapper;// 변환 담당자
@@ -47,10 +47,16 @@ public class BoardServiceImpl implements BoardService{
         // 다른 누군가 만들어 둔 기능을 이용하기.
         // 외주 주기.->boardRepository
         // 패턴 고정, findById -> 받을 때, Optional 받기
-     Optional<Board> result = boardRepository.findById(bno);
-     Board board = result.orElseThrow();
-     // 엔티티 클래스 타입(VO) -> DTO 타입 변환.
-     BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+        // 이전 작업,
+//     Optional<Board> result = boardRepository.findById(bno);
+        // 첨부 이미지 파일 포함된 메서드 교체
+        Optional<Board> result = boardRepository.findByIdWithImages(bno);
+        Board board = result.orElseThrow();
+        // 엔티티 클래스 타입(VO) -> DTO 타입 변환.
+        // 이전 버전
+//        BoardDTO boardDTO = modelMapper.map(board, BoardDTO.class);
+        // 보드 서비스의 디폴트 메서드로 이용하기.
+        BoardDTO boardDTO = entityToDTO(board);
         return boardDTO;
     }
 
@@ -80,7 +86,7 @@ public class BoardServiceImpl implements BoardService{
         String keyword = pageRequestDTO.getKeyword();
         Pageable pageable = pageRequestDTO.getPageable("bno");
         // 준비된 재료로, 서버에서, 데이터 가져오고, 페이징 정보도 가져오기.
-        Page<Board> result = boardRepository.searchAll(types,keyword,pageable);
+        Page<Board> result = boardRepository.searchAll(types, keyword, pageable);
         // Page<Board> result , 들어 있는 정보들 한번더 확인.
         // 1)전체 갯수 2)전체 페이지 3) 현재 페이지 번호
         // 3) 보여줄 사이즈 크기 4) 이전 페이지 유무
@@ -109,7 +115,7 @@ public class BoardServiceImpl implements BoardService{
         return PageResponseDTO.<BoardDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(dtoList)
-                .total((int)result.getTotalElements())
+                .total((int) result.getTotalElements())
                 .build();
     }
 
@@ -123,13 +129,13 @@ public class BoardServiceImpl implements BoardService{
         Pageable pageable = pageRequestDTO.getPageable("bno");
 
         //2) result : 보드 레포지토리 테스트에서, 관련 정보 확인 해주세요.
-        Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types,keyword,pageable);
+        Page<BoardListReplyCountDTO> result = boardRepository.searchWithReplyCount(types, keyword, pageable);
 
 
         return PageResponseDTO.<BoardListReplyCountDTO>withAll()
                 .pageRequestDTO(pageRequestDTO)
                 .dtoList(result.getContent())
-                .total((int)result.getTotalElements())
+                .total((int) result.getTotalElements())
                 .build();
     }
 

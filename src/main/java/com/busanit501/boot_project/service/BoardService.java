@@ -3,6 +3,9 @@ package com.busanit501.boot_project.service;
 import com.busanit501.boot_project.domain.Board;
 import com.busanit501.boot_project.dto.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public interface BoardService {
 
     Long register(BoardDTO boardDTO);
@@ -44,6 +47,27 @@ public interface BoardService {
             }); // end forEach
         } // end if
         return board;
+    }
+
+    // 2) board -> dto 변환하기.
+    default BoardDTO entityToDTO (Board board) {
+        BoardDTO boardDTO = BoardDTO.builder()
+                .bno(board.getBno())
+                .title(board.getTitle())
+                .content(board.getContent())
+                .writer(board.getWriter())
+                .regDate(board.getRegDate())
+                .modDate(board.getModDate())
+                .build();
+
+        // 첨부 파일명 변환 하기. 엔티티 -> 실제 파일명으로 변환 작업중.
+        List<String> fileNames = board.getImageSet().stream().sorted().map(boardImage ->
+                boardImage.getUuid() + "_"+boardImage.getFileName()).collect(Collectors.toList());
+
+        // 첨부 이미지 원본 파일명을, 다시 dto 담기
+        boardDTO.setFileNames(fileNames);
+        return boardDTO;
+
     }
 
 
