@@ -90,10 +90,10 @@
         <div class="col">
             <div class="container-fluid d-flex uploadResult" style="flex-wrap: wrap;">
 <!--                서버로부터 전달 받은 첨부 이미지들을 직접 보여주는 작업. -->
-                <th:block th:each="fileName : ${fileNames}">
-                    <div class="card col-4" th:with = "arr = ${fileName.split('_')}">
+                <th:block th:each="fileName : ${dto.fileNames}">
+                    <div class="card col-4" th:with="arr = ${fileName.split('_')}">
                         <div class="card-header d-flex justify-content-center">
-                            [[${arr[1]]]
+                            [[${arr[1]}]]
                         </div>
                         <button class="btn-sm btn-danger"
                         th:onclick="removeFile([[${arr[0]}]],[[${arr[1]}]], this)"
