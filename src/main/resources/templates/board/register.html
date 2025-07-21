@@ -191,7 +191,7 @@
         // 첨부된 이미지들의 정보를 숨겨놓은 부분을 가져오기.
         const target = document.querySelector(".uploadHidden")
         // uploadResult, 첨부된 이미지들
-        const uploadFiles = uploadResult.querySelector("img")
+        const uploadFiles = uploadResult.querySelectorAll("img")
         let str = ''
         // 첨부된 이미지들을 , 숨긴 항목으로, innerHTML 주입 할 예정. -> uploadHidden 요소에
         for(let i = 0; i < uploadFiles.length; i++) {
