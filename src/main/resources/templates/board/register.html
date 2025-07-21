@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>Board Register</title>
 </head>
+<!--주의 사항, 항상 , layout:fragment="content" 여기 안에서 작업 해야합니다.-->
     <div layout:fragment="content">
         <div class="row mt-3">
             <div class="col">
@@ -45,11 +46,53 @@
                         </form>
                     </div>
 
-                </div>
+                </div> <!--end card-->
+            </div> <!--end col-->
+        </div> <!--end row-->
 
+<!--        첨부 파일 썸네일 보여줄 공간-->
+        <div class="row mt-3">
+            <div class="col">
+                <div class="container-fluid d-flex uploadResult" style="flex-wrap: wrap;">
+                </div>
             </div>
         </div>
-    </div>
+<!--        첨부 파일 썸네일 보여줄 공간-->
+
+<!--        첨부 파일을 추가를 위한 모달창 공간-->
+        <!--    모달창 테스트, read.html에서 사용중인 모달창을 재사용. -->
+        <div class="modal uploadModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">이미지 첨부 파일</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            첨부 파일 :
+                        </span>
+                            <input type="file" name="files" class="form-control" multiple>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary uploadBtn">업로드</button>
+                        <button type="button" class="btn btn-secondary closeUploadBtn" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--    모달창 테스트-->
+<!--        첨부 파일을 추가를 위한 모달창 공간-->
+        <!--     비동기 통신 하기 위한 도구 설정, axios,-->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <!--    우리가 만든 자바스크립 파일, 임포트 : 불러오기-->
+        <script src="/js/upload.js"></script>
+
+    </div><!--end layout:fragment="content"-->
+
 <script layout:fragment="script" th:inline="javascript">
     const errors = [[${errors}]]
     console.log(errors)
