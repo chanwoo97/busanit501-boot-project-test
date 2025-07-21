@@ -35,6 +35,11 @@
                         </div>
                         <div class="mb-3">
                             <label for="files" class="form-control">첨부파일</label>
+<!--                            첨부된 이미지들 정보를 , 서버 제출용으로, 숨긴 항목으로 만들기. -->
+                            <div class="uploadHidden">
+
+                            </div>
+
                             <button type="button" class="btn btn-primary uploadFileBtn" id="files">이미지 추가</button>
                         </div>
 
@@ -177,6 +182,27 @@
         })
     }
     // 첨부 이미지, 삭제 기능
+
+    // 글작성시, 1) 게시글 내용 2) 첨부 이미지들 , 최종 작성 작업
+    document.querySelector(".submitBtn").addEventListener("click", function (e) {
+        e.preventDefault()
+        e.stopPropagation()
+
+        // 첨부된 이미지들의 정보를 숨겨놓은 부분을 가져오기.
+        const target = document.querySelector(".uploadHidden")
+        // uploadResult, 첨부된 이미지들
+        const uploadFiles = uploadResult.querySelector("img")
+        let str = ''
+        // 첨부된 이미지들을 , 숨긴 항목으로, innerHTML 주입 할 예정. -> uploadHidden 요소에
+        for(let i = 0; i < uploadFiles.length; i++) {
+            const uploadFile = uploadFiles[i]
+            const imgLink = uploadFile.getAttribute("src")
+
+            str += `<input type="hidden" name="fileNames" value="${imgLink}">`
+        }
+        target.innerHTML = str
+    }, false)
+    // 글작성시, 1) 게시글 내용 2) 첨부 이미지들 , 최종 작성 작업
 
 </script>
 
