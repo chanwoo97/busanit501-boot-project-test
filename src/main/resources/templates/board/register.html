@@ -196,7 +196,7 @@
         // 첨부된 이미지들을 , 숨긴 항목으로, innerHTML 주입 할 예정. -> uploadHidden 요소에
         for(let i = 0; i < uploadFiles.length; i++) {
             const uploadFile = uploadFiles[i]
-            const imgLink = uploadFile.getAttribute("src")
+            const imgLink = uploadFile.getAttribute("data-src")
 
             str += `<input type="hidden" name="fileNames" value="${imgLink}">`
         }
