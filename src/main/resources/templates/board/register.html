@@ -70,9 +70,6 @@
                     </div>
                     <div class="modal-body">
                         <div class="input-group mb-3">
-                        <span class="input-group-text">
-                            첨부 파일 :
-                        </span>
                             <input type="file" name="files" class="form-control" multiple>
                         </div>
 
@@ -112,6 +109,30 @@
         e.preventDefault()
         uploadModal.show()
     },false)
+    //업로드 모달 작업.
+
+    // 업로드 버튼 이벤트 리스너
+    document.querySelector(".uploadBtn").addEventListener("click",function (e){
+        const formObj = new FormData();
+        const fileInput = document.querySelector("input[name='files']")
+        console.log(fileInput.files) // 선택된 파일 콘솔에서 확인, 1차 유효성 체크, 파일유무
+
+        const files = fileInput.files
+        for(let i = 0; i < files.length; i++) {
+            formObj.append("files", files[i])
+        }
+
+        // 실제 백엔드 서버에, 첨부 파일들을 업로드
+        // upload.js 만든 , 함수를 이용함.
+        uploadToServer(formObj).then(result => {
+            console.log(result)
+            uploadModal.hide()
+        }).catch(e => {
+            uploadModal.hide()
+        })
+
+    }, false)
+    // 업로드 버튼 이벤트 리스너
 
 </script>
 
