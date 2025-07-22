@@ -5,6 +5,9 @@ import com.busanit501.boot_project.service.BoardService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,12 +15,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.w3c.dom.stylesheets.LinkStyle;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 
 @Controller
 @RequestMapping("/board")
 @RequiredArgsConstructor
 @Log4j2
 public class BoardController {
+    // 업로드 할 , 저장 위치를 불러오기. com.busanit501.upload.path
+    @Value("${com.busanit501.upload.path}") // 스프링에서 지원해주는 패키지 경로 사용하기.
+    private String uploadPath;
+
     private final BoardService boardService;
 
     @GetMapping("/list")
@@ -98,11 +111,49 @@ public class BoardController {
     }
 
     @PostMapping("/remove")
-    public String remove(Long bno, RedirectAttributes redirectAttributes) {
-        log.info("BoardController 에서, remove 작업중 , 넘어온 bno 확인: " + bno);
-        boardService.remove(bno);
+    // 추가, 첨부이미지들도 같이 삭제 진행해야함.
+    // 삭제 준비물 1) 첨부 이미지들의 파일 목록 필요함.
+    // 서버에서 받으려면, DTO 자동 수집
+    public String remove(BoardDTO boardDTO, RedirectAttributes redirectAttributes) {
+        log.info("BoardController 에서, remove 작업중 , 넘어온 bno 확인: " + boardDTO.getBno());
+        boardService.remove(boardDTO.getBno());
+
+        //추가, 첨부 이미지들을 삭제 해야함.
+        log.info("삭제 작업 , 컨트롤러, 첨부된 파일 목록 : "+boardDTO.getFileNames());
+        List<String> fileNames = boardDTO.getFileNames();
+        if (fileNames != null && fileNames.size() > 0) {
+            // 추가해야함.
+            removeFiles(fileNames);
+        }
+
+        // 첨부된 댓글이 있다면 댓글도 같이 삭제해야함.
+
+
         redirectAttributes.addFlashAttribute("result", "삭제완료!!");
         return "redirect:/board/list";
+    }
+
+    public void removeFiles(List<String> files) {
+        for(String fileName : files) {
+            // 스프링에제공해주는 파일 삭제 메소드 사용해서, 실제 미디어 저장소 삭제 진행.
+            Resource resource = new FileSystemResource (uploadPath + File.separator + fileName);
+            String resourceName = resource.getFilename();
+            try{
+                // 마임 타입이 image 이면 확인 하는 용도
+                String contentType = Files.probeContentType(resource.getFile().toPath());
+                // 원본 삭제
+                resource.getFile().delete();
+
+                // 썸네일도 같이 삭제
+                if(contentType.startsWith("image")) {
+                    File thumbnailFile = new File(uploadPath + File.separator +
+                            "s_"+fileName);
+                    thumbnailFile.delete();
+                }
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
+        }
     }
 
 }
