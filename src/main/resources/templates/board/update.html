@@ -104,11 +104,12 @@
                     <div class="card col-4" th:with="arr = ${fileName.split('_')}">
                         <div class="card-header d-flex justify-content-center">
                             [[${arr[1]}]]
+
+                            <button class="btn-sm btn-danger"
+                                    th:onclick="removeFile([[${arr[0]}]],[[${arr[1]}]], this)"
+                            >X
+                            </button>
                         </div>
-                        <button class="btn-sm btn-danger"
-                                th:onclick="removeFile([[${arr[0]}]],[[${arr[1]}]], this)"
-                        >X
-                        </button>
                         <div class="card-body">
                             <img th:src="|/view/s_${fileName}|" th:data-src="${fileName}">
                         </div>
@@ -277,15 +278,15 @@
     // 최종적으로 삭제가 될 파일들의 목록 을 담을 리스트 생성.
     const removeFileList = []
 
-    function removeFile(uuid,fileName,obj) {
-        if(!confirm("파일 삭제할까요?")){
+    function removeFile(uuid, fileName, obj) {
+        if (!confirm("파일 삭제할까요?")) {
             return
         }
         console.log(uuid)
         console.log(fileName)
         console.log(obj)
 
-        removeFileList.push({uuid,fileName})
+        removeFileList.push({uuid, fileName})
         const targetDiv = obj.closest(".card")
         targetDiv.remove()
         console.log(removeFileList)
@@ -294,7 +295,7 @@
     // 순서5,
     // 새롭게 첨부할 이미지 파일 목록 , 추가.
     // appendFileData()
-    function appendFileData () {
+    function appendFileData() {
         const target = document.querySelector(".uploadHidden")
         const uploadFiles = uploadResult.querySelectorAll("img")
         // 필요한 파일 , 주입할 히든 태그를 넣을 변수.
@@ -312,11 +313,10 @@
     // 삭제할 파일들을 삭제
     // callRemoveFiles()
     function callRemoveFiles() {
-        removeFileList.forEach(({uuid,fileName}) => {
-            removeFileToServer({uuid,fileName})
+        removeFileList.forEach(({uuid, fileName}) => {
+            removeFileToServer({uuid, fileName})
         })
     }
-
 
 
 </script>
