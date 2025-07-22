@@ -208,7 +208,8 @@
 
         formObj.action = `/board/remove`
         formObj.method = 'post'
-        formObj.submit()
+        // 테스트 용으로 히든으로 추가 되는지 여부 확인.
+        // formObj.submit()
     }, false)
 
     // 순서1
@@ -307,6 +308,7 @@
     // appendFileData()
     function appendFileData() {
         const target = document.querySelector(".uploadHidden")
+
         const uploadFiles = uploadResult.querySelectorAll("img")
         // 필요한 파일 , 주입할 히든 태그를 넣을 변수.
         let str = ''
