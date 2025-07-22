@@ -200,11 +200,15 @@
         // 삭제할 첨부 이미지 목록 추가.
 
         // 화면에 보이는 파일들을 form 태그에 추가 작업.
+        console.log("appendFileData 호출 전")
         appendFileData()
+        console.log("appendFileData 호출 후")
 
         //순서7
         // 화면에서 안보이도록 처리된 파일들을 form 태그에 추가 작업.
+        console.log("appendNotShownData 호출 전")
         appendNotShownData()
+        console.log("appendNotShownData 호출 후")
 
         formObj.action = `/board/remove`
         formObj.method = 'post'
@@ -316,6 +320,7 @@
         for (let i = 0; i < uploadResult.length; i++) {
             const uploadFile = uploadFiles[i]
             const imgLink = uploadFile.getAttribute("data-src")
+            console.log("imgLink 확인 : ", imgLink)
             str += `<input type="hidden" name="fileNames" value="${imgLink}">`
         }
         target.innerHTML = str;
