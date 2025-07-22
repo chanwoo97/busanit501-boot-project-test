@@ -175,6 +175,16 @@
         e.stopPropagation()
 
         formObj.action = `/board/update?${link}`
+
+        // 순서5
+        // 첨부할 파일을 히든으로 추가
+        appendFileData()
+
+        // 순서6, 아랫쪽에 함수 정의함
+        // 삭제할 파일들을 삭제
+        callRemoveFiles()
+
+
         formObj.method = 'post'
         console.log("f1 확인2 : " + formObj)
         formObj.submit()
@@ -257,6 +267,7 @@
 
     // 첨부 이미지, 화면에 출력하는 기능.
 
+    // 순서4
     // 삭제 부터 진행하기.
     // 주의사항
     // 1) 수정하기는, 게시글 내용과, 변경되 이미지를 , 한번에 수정하기 버튼을 클릭시 서버에 전달하기.
@@ -279,6 +290,34 @@
         targetDiv.remove()
         console.log(removeFileList)
     }
+
+    // 순서5,
+    // 새롭게 첨부할 이미지 파일 목록 , 추가.
+    // appendFileData()
+    function appendFileData () {
+        const target = document.querySelector(".uploadHidden")
+        const uploadFiles = uploadResult.querySelectorAll("img")
+        // 필요한 파일 , 주입할 히든 태그를 넣을 변수.
+        let str = ''
+
+        for (let i = 0; i < uploadResult.length; i++) {
+            const uploadFile = uploadFiles[i]
+            const imgLink = uploadFile.getAttribute("data-src")
+            str += `<input type="hidden" name="fileNames" value="${imgLink}">`
+        }
+        target.innerHTML = str;
+    }
+
+    // 순서6, 아랫쪽에 함수 정의함
+    // 삭제할 파일들을 삭제
+    // callRemoveFiles()
+    function callRemoveFiles() {
+        removeFileList.forEach(({uuid,fileName}) => {
+            removeFileToServer({uuid,fileName})
+        })
+    }
+
+
 
 </script>
 
