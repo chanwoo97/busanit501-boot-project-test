@@ -64,6 +64,16 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="files" class="form-control">첨부파일</label>
+                            <!--                            첨부된 이미지들 정보를 , 서버 제출용으로, 숨긴 항목으로 만들기. -->
+                            <div class="uploadHidden">
+
+                            </div>
+
+                            <button type="button" class="btn btn-primary uploadFileBtn" id="files">이미지 추가</button>
+                        </div>
+
+                        <div class="mb-3">
                             <!--                           예시 url
                                                             http://localhost:8080/board/update
                                                             ?bno=12
@@ -174,6 +184,10 @@
         formObj.method = 'post'
         formObj.submit()
     }, false)
+
+    //  수정 화면에서, 이미지 첨부하는 모달창 이벤트 리스너가 없음.
+
+
 
 </script>
 
