@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,10 +48,12 @@ public class BoardController {
         model.addAttribute("responseDTO", responseDTO);
     }
 
-//    등록화면 작업, get
+    //    등록화면 작업, get
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/register")
     public void register() {
     }
+
     // 등록 처리, post
     @PostMapping("/register")
     public String registerPost(@Valid BoardDTO boardDTO,
@@ -65,12 +68,12 @@ public class BoardController {
         log.info("넘어온 데이터 확인 boardDTO : " + boardDTO);
         Long bno = boardService.register(boardDTO);
         redirectAttributes.addFlashAttribute("result", bno);
-        return  "redirect:/board/list";
+        return "redirect:/board/list";
     }
 
     // 상세보기 화면, 수정하는 화면 동일.
     // 읽기 전용, 수정이 가능한 input
-    @GetMapping({"/read","/update"})// 화면 경로 : /board/read.html 작업함.
+    @GetMapping({"/read", "/update"})// 화면 경로 : /board/read.html 작업함.
     // 예시
     //http://localhost:8080/board/list?type=tcw&keyword=1&page=2
     // type, keyword, page, -> PageRequestDTO의 멤버 이름과 동일함.
@@ -80,7 +83,7 @@ public class BoardController {
                      Model model) {
         // 누구에게 외주 줄까요? BoardService  외주,
         BoardDTO boardDTO = boardService.readOne(bno);
-        log.info("BoardController 에서, read 작업중 boardDTO: "+ boardDTO);
+        log.info("BoardController 에서, read 작업중 boardDTO: " + boardDTO);
         // 서버 -> 화면, 데이터 전달,
         model.addAttribute("dto", boardDTO);
 
@@ -102,12 +105,12 @@ public class BoardController {
             // 현재 , 수정하고 있는 게시글의 번호 정보가 필요함.
             // 쿼리 스트링으로 bno 번호는 전달하고,
             redirectAttributes.addAttribute("bno", boardDTO.getBno());
-            return "redirect:/board/update?"+link;
+            return "redirect:/board/update?" + link;
         }
         boardService.modify(boardDTO);
         redirectAttributes.addFlashAttribute("result", "수정완료");
         redirectAttributes.addAttribute("bno", boardDTO.getBno());
-        return  "redirect:/board/read";
+        return "redirect:/board/read";
     }
 
     @PostMapping("/remove")
@@ -119,7 +122,7 @@ public class BoardController {
         boardService.remove(boardDTO.getBno());
 
         //추가, 첨부 이미지들을 삭제 해야함.
-        log.info("삭제 작업 , 컨트롤러, 첨부된 파일 목록 : "+boardDTO.getFileNames());
+        log.info("삭제 작업 , 컨트롤러, 첨부된 파일 목록 : " + boardDTO.getFileNames());
         List<String> fileNames = boardDTO.getFileNames();
         if (fileNames != null && fileNames.size() > 0) {
             // 추가해야함.
@@ -134,20 +137,20 @@ public class BoardController {
     }
 
     public void removeFiles(List<String> files) {
-        for(String fileName : files) {
+        for (String fileName : files) {
             // 스프링에제공해주는 파일 삭제 메소드 사용해서, 실제 미디어 저장소 삭제 진행.
-            Resource resource = new FileSystemResource (uploadPath + File.separator + fileName);
+            Resource resource = new FileSystemResource(uploadPath + File.separator + fileName);
             String resourceName = resource.getFilename();
-            try{
+            try {
                 // 마임 타입이 image 이면 확인 하는 용도
                 String contentType = Files.probeContentType(resource.getFile().toPath());
                 // 원본 삭제
                 resource.getFile().delete();
 
                 // 썸네일도 같이 삭제
-                if(contentType.startsWith("image")) {
+                if (contentType.startsWith("image")) {
                     File thumbnailFile = new File(uploadPath + File.separator +
-                            "s_"+fileName);
+                            "s_" + fileName);
                     thumbnailFile.delete();
                 }
             } catch (IOException e) {
