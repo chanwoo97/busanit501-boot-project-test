@@ -49,7 +49,7 @@ public class BoardController {
     }
 
     //    등록화면 작업, get
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER')") // 로그인한 유저만 접근 가능.
     @GetMapping("/register")
     public void register() {
     }

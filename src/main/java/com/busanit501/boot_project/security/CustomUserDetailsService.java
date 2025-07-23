@@ -9,14 +9,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-@Log4j2
-@Service
-@RequiredArgsConstructor
 // 시큐리티에서는 로그인시, 원하는 포맷 형태가 있음.
 // 시큐리티가 만들어 둔 UserDetails 라는 타입으로 맞춰주기.
 // 시큐리티에서 제공하는 UserDetailsService 라는 인터페이스 구현하면
 // 좀 더 쉽게 , 시큐리티가 원하는 타입을 만들수 있음.
-
+@Log4j2
+@Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
     private PasswordEncoder passwordEncoder;
@@ -37,10 +36,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // 작업2
         // 더미 데이터 작업, 유저 : user1 , 패스워드 : 1111(평문) , 암호화 해보기.
-        UserDetails userDetails = User.builder().username("user1")
-                .password(passwordEncoder.encode("1111"))
-                .authorities("ROLE_USER")
-                .build();
-        return userDetails;
+//        UserDetails userDetails = User.builder().username("user1")
+//                .password(passwordEncoder.encode("1111"))
+//                .authorities("ROLE_USER")
+//                .build();
+
+        return null;
     }
 }
