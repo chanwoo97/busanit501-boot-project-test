@@ -25,6 +25,13 @@ public class CustomSecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         log.info("Security Filter Chain--------------설정--------------");
+
+        // 내부에서 순서1
+        // 폼방식 : 로그인창으로, 유저, 패스워드 인증하는 방식.
+        // 시큐리티에서 제공해주는 기본 인증 폼을 사용안하고,
+        // 우리가 만든 로그인창을 이용함.
+        http.formLogin(form -> form.loginPage("/member/login"));
+
         return  http.build();
     }
 
