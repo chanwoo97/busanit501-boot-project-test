@@ -1,5 +1,6 @@
 package com.busanit501.boot_project.config;
 
+import com.busanit501.boot_project.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 
@@ -21,6 +22,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity()
 public class CustomSecurityConfig {
 
+    private final CustomUserDetailsService customUserDetailsService;
+
     // 순서1,
     // 실제 접근 하는 ACL, 접근 제어 목록,
     // 서버에 접근하는 명단 작성.
@@ -33,6 +36,10 @@ public class CustomSecurityConfig {
         // 시큐리티에서 제공해주는 기본 인증 폼을 사용안하고,
         // 우리가 만든 로그인창을 이용함.
         http.formLogin(form -> form.loginPage("/member/login"));
+
+        // 내부 순서2,
+        // customUserDetailsService 주입.
+        http.userDetailsService(customUserDetailsService);
 
         return  http.build();
     }

@@ -2,6 +2,7 @@ package com.busanit501.boot_project.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,11 +19,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private PasswordEncoder passwordEncoder;
-
-    public CustomUserDetailsService(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    private final PasswordEncoder passwordEncoder;
 
     // 업무
     // 시큐리티에 폼방식으로 접근하는 유저명을 확인하고, 디비에 저장된 유저가 맞다면,
@@ -36,11 +33,11 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         // 작업2
         // 더미 데이터 작업, 유저 : user1 , 패스워드 : 1111(평문) , 암호화 해보기.
-//        UserDetails userDetails = User.builder().username("user1")
-//                .password(passwordEncoder.encode("1111"))
-//                .authorities("ROLE_USER")
-//                .build();
+        UserDetails userDetails = User.builder().username("user1")
+                .password(passwordEncoder.encode("1111"))
+                .authorities("ROLE_USER")
+                .build();
 
-        return null;
+        return userDetails;
     }
 }
