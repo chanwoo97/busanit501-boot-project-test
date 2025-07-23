@@ -57,7 +57,7 @@ public class CustomSecurityConfig {
         // 만약, 사용한다면,
         // 웹 화면에서 -> 서버로,  csrf 토큰 생성해서 전송.
         // 레스트로 작업시에도 , csrf 토큰 생성해서 전송.
-//        http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
+        http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
 
 
         // 순서 6, 가장 중요함.

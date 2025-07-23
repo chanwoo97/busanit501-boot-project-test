@@ -16,5 +16,9 @@ public class MemberController {
     public void loginGet(String error, String logout) {
         log.info("====커스텀 로그인 페이지 화면 get===============================");
         log.info("logout : " + logout);
+
+        if(logout != null) {
+            log.info("유저 , 로그아웃 진행 함. =============");
+        }
     }
 }
