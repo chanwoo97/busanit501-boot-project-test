@@ -70,7 +70,9 @@
                                                             &page=1&keyword=1&type=twc-->
 
                             <a th:href="|@{/board/update}?bno=${dto.bno}&${link}|">
-                                <button type="button" class="btn btn-primary ">수정하기</button>
+                                <button type="button"
+                                        th:if="${user != null && user.Username == dto.writer}"
+                                        class="btn btn-primary ">수정하기</button>
                             </a>
                             <a th:href="|@{/board/list}?${link}|">
                                 <button type="button" class="btn btn-secondary">목록가기</button>
