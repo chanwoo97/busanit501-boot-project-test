@@ -101,12 +101,16 @@
     const auth = [[${authentication}]]
     console.log("auth : " + auth)
 
+    // 자바스크립트에서, 타임 주석 방법.  // 일반 주석,
+    // 타임 리프 주석으로 반드시 해야함!!!
+    // <!--/*  */ -->
+    <!--/*
     const auth2 = [[${user}]]
     console.log("auth2 : " + auth2)
 
     const auth3 = [[${user.Username}]]
     console.log("auth3 : " + auth3)
-
+*/ -->
     const auth4 = [[${#authentication.principal}]]
     console.log("auth : " + auth)
     // 서버로부터 , 인증 정보를 받기
