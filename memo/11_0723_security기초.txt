@@ -175,6 +175,47 @@ create table persistent_logins(
     token varchar(64) not null,
     last_used timestamp not null
 );
+=====================================================
+추가 설명
+ persistent_logins 테이블 개요
+스프링 시큐리티에서 영구 토큰 기반 Remember-Me 기능을 사용할 때 필요한 표준 테이블입니다. 이 테이블은 사용자의 자동 로그인 정보를 안전하게 저장합니다.
+🔍 컬럼 상세 설명
+1. username (varchar(64) not null)
+
+사용자의 로그인 ID를 저장
+UserDetails의 username과 매핑
+한 사용자가 여러 기기에서 로그인할 수 있으므로 Primary Key가 아님
+
+2. series (varchar(64) primary key)
+
+각 Remember-Me 세션의 고유 식별자
+랜덤하게 생성된 Base64 인코딩 문자열
+브라우저/기기별로 고유한 값 할당
+쿠키 탈취 공격 감지에 사용
+
+3. token (varchar(64) not null)
+
+실제 인증에 사용되는 토큰 값
+매 요청마다 새로운 값으로 갱신 (보안 강화)
+Base64로 인코딩된 랜덤 문자열
+
+4. last_used (timestamp not null)
+
+마지막으로 토큰이 사용된 시간
+토큰 만료 여부 판단에 사용
+사용자 활동 추적 가능
+
+🛡️ 보안 메커니즘
+토큰 갱신 방식
+최초 로그인 → series 생성 → token 생성
+↓
+자동 로그인 시도 → series 검증 → token 검증
+↓
+성공 시 → 동일 series 유지 → 새로운 token 생성
+쿠키 구조
+Remember-Me 쿠키는 다음 형식으로 저장됩니다:
+Base64(series + ":" + token)
+================================================
 
 
 화면에서, 인증이 된 유저일 경우, 조건에 맞게, 특정의 화면이 보이게 할려면,
