@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,8 +52,9 @@ public class BoardController {
 
     //    등록화면 작업, get
     @PreAuthorize("hasRole('USER')") // 로그인한 유저만 접근 가능.
-    @GetMapping("/register")
-    public void register() {
+    @GetMapping("/register") // @AuthenticationPrincipal: 시큐리티에 로그인 된 정보를 관리하는 도구
+    public void register(@AuthenticationPrincipal UserDetails user, Model model) {
+        model.addAttribute("user", user);
     }
 
     // 등록 처리, post
