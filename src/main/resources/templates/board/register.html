@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<!--타임리프와, 화면의 인가 작업시 필요한 메타 태그 필요함-->
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="www.thymeleaf.org"
       layout:decorate="~{layout/basic.html}"
       lang="en">
@@ -111,7 +113,7 @@
     // <!--/*  */-->
 
     const auth2 = [[${user}]]
-    console.log("auth2 : " + auth2)
+    console.log("auth2 : " , auth2)
 
     const auth3 = [[${user.Username}]]
     console.log("auth3 : " + auth3)
