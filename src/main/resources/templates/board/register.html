@@ -35,7 +35,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="files" class="form-control">첨부파일</label>
-<!--                            첨부된 이미지들 정보를 , 서버 제출용으로, 숨긴 항목으로 만들기. -->
+                            <!--                            첨부된 이미지들 정보를 , 서버 제출용으로, 숨긴 항목으로 만들기. -->
                             <div class="uploadHidden">
 
                             </div>
@@ -98,21 +98,25 @@
 
 <script layout:fragment="script" th:inline="javascript">
     // 서버로부터 , 인증 정보를 받기
+    <!--/*
     const auth = [[${authentication}]]
     console.log("auth : " + auth)
 
+    const auth4 = [[${#authentication.principal}]]
+    console.log("auth : " + auth)
+*/
+    -- >
     // 자바스크립트에서, 타임 주석 방법.  // 일반 주석,
     // 타임 리프 주석으로 반드시 해야함!!!
     // <!--/*  */-->
-    <!--/*
+
     const auth2 = [[${user}]]
     console.log("auth2 : " + auth2)
 
     const auth3 = [[${user.Username}]]
     console.log("auth3 : " + auth3)
-*/-->
-    const auth4 = [[${#authentication.principal}]]
-    console.log("auth : " + auth)
+
+
     // 서버로부터 , 인증 정보를 받기
     /////////////////////////////////////////////
 
@@ -195,11 +199,12 @@
 
         const targetDiv = obj.closest(".card")
         // upload.js에 있는 , 첨부 이미지를 삭제하는 기능. 부트 서버에 전달하는 하뭇
-        removeFileToServer(uuid,fileName).then(data => {
+        removeFileToServer(uuid, fileName).then(data => {
             // 미디어 저장소에 저장된 이미지 파일도 삭제하고, 화면에 카드 요소도 삭제를함.
             targetDiv.remove()
         })
     }
+
     // 첨부 이미지, 삭제 기능
 
     // 글작성시, 1) 게시글 내용 2) 첨부 이미지들 , 최종 작성 작업
@@ -213,7 +218,7 @@
         const uploadFiles = uploadResult.querySelectorAll("img")
         let str = ''
         // 첨부된 이미지들을 , 숨긴 항목으로, innerHTML 주입 할 예정. -> uploadHidden 요소에
-        for(let i = 0; i < uploadFiles.length; i++) {
+        for (let i = 0; i < uploadFiles.length; i++) {
             const uploadFile = uploadFiles[i]
             const imgLink = uploadFile.getAttribute("data-src")
 
