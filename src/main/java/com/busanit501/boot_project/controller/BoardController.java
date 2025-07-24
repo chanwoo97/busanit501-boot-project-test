@@ -37,7 +37,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("/list")
-    public void list(PageRequestDTO pageRequestDTO, Model model) {
+    public void list(@AuthenticationPrincipal UserDetails user,PageRequestDTO pageRequestDTO, Model model) {
         // 서비스 외주 이용해서, 데이터 가져오기
         // 1, 기존, 페이징 정보와, 검색 정보만 이용한 리스트 목록,
 //        PageResponseDTO<BoardDTO> responseDTO = boardService.list(pageRequestDTO);
@@ -48,6 +48,7 @@ public class BoardController {
         log.info("BoardController에서, list, responseDTO : {}", responseDTO);
         // 서버 -> 화면으로 데이터 전달.
         model.addAttribute("responseDTO", responseDTO);
+        model.addAttribute("user", user);
     }
 
     //    등록화면 작업, get
@@ -82,13 +83,14 @@ public class BoardController {
     // type, keyword, page, -> PageRequestDTO의 멤버 이름과 동일함.
     // 그래서, 자동 수집함. !!중요!!
     // 자동 화면으로 전달도 함. !!중요!!
-    public void read(Long bno, PageRequestDTO pageRequestDTO,
+    public void read(@AuthenticationPrincipal UserDetails user,Long bno, PageRequestDTO pageRequestDTO,
                      Model model) {
         // 누구에게 외주 줄까요? BoardService  외주,
         BoardDTO boardDTO = boardService.readOne(bno);
         log.info("BoardController 에서, read 작업중 boardDTO: " + boardDTO);
         // 서버 -> 화면, 데이터 전달,
         model.addAttribute("dto", boardDTO);
+        model.addAttribute("user", user);
 
     }
 

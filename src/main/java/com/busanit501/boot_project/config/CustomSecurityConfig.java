@@ -98,11 +98,11 @@ public class CustomSecurityConfig {
         // /member/login?logout
         // 멤버 컨트롤러,
         //
-//        http.logout(
-//                logout -> logout.logoutUrl("/member/logout")
-//                        .logoutSuccessUrl("/member/login?logout")
-//
-//        );
+        http.logout(
+                logout -> logout.logoutUrl("/member/logout")
+                        .logoutSuccessUrl("/member/login?logout")
+
+        );
 
         // 자동 로그인 순서2,
         http.rememberMe(
