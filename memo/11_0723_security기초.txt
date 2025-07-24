@@ -189,7 +189,7 @@ UserDetails의 username과 매핑
 2. series (varchar(64) primary key)
 
 각 Remember-Me 세션의 고유 식별자
-랜덤하게 생성된 Base64 인코딩 문자열
+랜덤하게 생성된 Base64 인코딩 문자열 = UUID, 랜덤 문자열, 중복 방지.
 브라우저/기기별로 고유한 값 할당
 쿠키 탈취 공격 감지에 사용
 
