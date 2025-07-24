@@ -172,7 +172,7 @@
                         <span class="input-group-text">
                             작성자
                         </span>
-                        <input type="text" class="form-control modifyReplyer">
+                        <input type="text" class="form-control modifyReplyer" readonly>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -420,7 +420,7 @@
     removeBtn.addEventListener("click", function (e) {
         // 댓글 작성자와 , 로그인한 유저 일치 여부 검사
         if(!hasAuth) {
-            alert("댓글 작성자만 수정 가능합니다.")
+            alert("댓글 작성자만 삭제 가능합니다.")
             modifyModal.hide()
             return
         }

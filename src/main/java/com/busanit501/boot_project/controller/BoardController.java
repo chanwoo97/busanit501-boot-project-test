@@ -97,6 +97,9 @@ public class BoardController {
 
     // 수정 처리 post 작업,
     @PostMapping("/update")
+    // principal.username : 로그인한 유저,
+    // #boardDTO.writer : 게시글 작성자,
+    @PreAuthorize("principal.username == #boardDTO.writer")
     public String update(PageRequestDTO pageRequestDTO,
                          @Valid BoardDTO boardDTO,
                          BindingResult bindingResult,
