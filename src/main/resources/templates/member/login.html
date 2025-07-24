@@ -22,6 +22,14 @@
             <th:block th:if="${param.logout != null}">
                 <h1>로그 아웃 되었습니다.~~~</h1>
             </th:block>
+<!--            http://localhost:8080/member/login?error=ACCESS_DENIED-->
+            <th:block th:if="${param.error != null}">
+                <th:block th:switch="${param.error[0]}">
+            <span th:case="'ACCESS_DENIED'">
+                <i class="fas fa-exclamation-triangle"></i> 접근이 거부되었습니다. 권한이 없습니다.
+                </th:block>
+            </span>
+            </th:block>
             <form id="loginForm" action="/member/login" method="post"
             th:if="${param.logout == null}"
             >
