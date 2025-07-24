@@ -63,8 +63,8 @@ public CustomUserDetailsService() {
                 .password(passwordEncoder.encode("1234"))
                 // 인증된 유저,
                 // 관리자, ROLE_ADMIN
-//                .authorities("ROLE_USER")
-                .authorities("ROLE_USER", "ROLE_ADMIN")
+                .authorities("ROLE_USER")
+//                .authorities("ROLE_USER", "ROLE_ADMIN")
                 .build();
 
 

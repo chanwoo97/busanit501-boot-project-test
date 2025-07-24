@@ -77,6 +77,7 @@ public class BoardController {
 
     // 상세보기 화면, 수정하는 화면 동일.
     // 읽기 전용, 수정이 가능한 input
+    @PreAuthorize("isAuthenticated()") // 로그인한 유저만 상세보기 , 수정폼 접근 가능.
     @GetMapping({"/read", "/update"})// 화면 경로 : /board/read.html 작업함.
     // 예시
     //http://localhost:8080/board/list?type=tcw&keyword=1&page=2
