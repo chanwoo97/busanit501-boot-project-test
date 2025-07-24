@@ -47,7 +47,9 @@
 
                                     <!--    로그인시 권한별로 어드민 페이지 표시 해보기-->
                                     <!--                                    타임리프의 기능 중에 sec 접두어, 기능 따로 도구를 설치-->
-
+                                    <li class="nav-item"  sec:authorize="hasAnyAuthority('ROLE_ADMIN')">
+                                        <a class="nav-link" href="#" >관리자페이지</a>
+                                    </li>
 
                                     <li class="nav-item ">
                                         <a class="nav-link" href="#"></a>
