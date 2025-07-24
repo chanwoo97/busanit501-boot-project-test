@@ -126,6 +126,7 @@ public class BoardController {
     // 추가, 첨부이미지들도 같이 삭제 진행해야함.
     // 삭제 준비물 1) 첨부 이미지들의 파일 목록 필요함.
     // 서버에서 받으려면, DTO 자동 수집
+    @PreAuthorize("principal.username == #boardDTO.writer")
     public String remove(BoardDTO boardDTO, RedirectAttributes redirectAttributes) {
         log.info("BoardController 에서, remove 작업중 , 넘어온 bno 확인: " + boardDTO.getBno());
         boardService.remove(boardDTO.getBno());

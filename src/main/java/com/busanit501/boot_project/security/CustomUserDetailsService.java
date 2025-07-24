@@ -56,7 +56,7 @@ public CustomUserDetailsService() {
 
         log.info("passwordEncoder.encode(\"123456\") : " +passwordEncoder.encode("123456"));
         UserDetails userDetails = User.builder()
-                .username("lsy2")
+                .username("lsy")
                 // 서버에서는 평문으로 패스워드 넘어오면,
                 // 기본 다 거부함. 기본 해쉬한 값으로 와야함.
 //                .password("1234")

@@ -1,6 +1,7 @@
 package com.busanit501.boot_project.config;
 
 import com.busanit501.boot_project.security.CustomUserDetailsService;
+import com.busanit501.boot_project.security.handler.Custom403Handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -116,10 +117,10 @@ public class CustomSecurityConfig {
         // 자동 로그인 순서2,
 
         // 403 에러 페이지 연결 하기.
-//        http.exceptionHandling(
-//                exception -> {
-//                    exception.accessDeniedHandler(accessDeniedHandler());
-//                });
+        http.exceptionHandling(
+                exception -> {
+                    exception.accessDeniedHandler(accessDeniedHandler());
+                });
 
         //카카오 로그인 API 설정
 //        http.oauth2Login(
@@ -166,10 +167,10 @@ public class CustomSecurityConfig {
     // 403 핸들러 추가.
     // 설정 클래스에 추가하기.
     // 레스트용, Content-Type, application/json 형태 일 때만 동작을하고,
-//    @Bean
-//    public AccessDeniedHandler accessDeniedHandler() {
-//        return new Custom403Handler();
-//    }
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
+    }
 
     // 소셜 로그인 후, 후처리 추가, 설정,
 //    @Bean
