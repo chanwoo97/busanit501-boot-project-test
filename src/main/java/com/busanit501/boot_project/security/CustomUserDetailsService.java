@@ -82,13 +82,16 @@ public CustomUserDetailsService() {
         }
         Member member = result.get();
 
+        // MemberSecurityDTO ,사실은 반환 타입 , UserDetails 타입이다,
+        // 왜? User 클래스를 상속을 받아서 ,
         MemberSecurityDTO memberSecurityDTO = new MemberSecurityDTO(
                 member.getMid(),
                 member.getMpw(),
                 member.getEmail(),
                 member.isDel(),
                 false,
-                // 디비에 저장된 USER, ADMIN -> 시큐리티에서 원하는 구조 인 ROLE_USER, ROLE_ADMIN 형태로 변경하기.
+                // 디비에 저장된 USER, ADMIN
+                // -> 시큐리티에서 원하는 구조 인 ROLE_USER, ROLE_ADMIN 형태로 변경하기.
                 member.getRoleSet().stream().map(memberRole ->
                         new SimpleGrantedAuthority("ROLE_"+memberRole.name())).collect(Collectors.toList())
         );

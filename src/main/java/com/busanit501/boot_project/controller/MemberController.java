@@ -1,9 +1,11 @@
 package com.busanit501.boot_project.controller;
 
+import com.busanit501.boot_project.dto.MemberJoinDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -21,4 +23,19 @@ public class MemberController {
             log.info("유저 , 로그아웃 진행 함. =============");
         }
     }
+
+    // /member/join
+    @GetMapping("/join")
+    public void joinGet() {
+
+    }
+
+    @PostMapping("/join")
+    public String joinPost(MemberJoinDTO memberJoinDTO) {
+        log.info("멤버 컨트롤러에서, 조인 로직 처리 작업 중. ");
+        log.info("화면에서 전달받은 회원 가입 유저 데이터 확인 : " + memberJoinDTO);
+
+        return "redirect:/board/list";
+    }
+
 }
