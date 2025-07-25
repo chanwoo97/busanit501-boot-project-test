@@ -28,16 +28,15 @@ import java.util.stream.Collectors;
     // 디비에 있는 아이디의 일치 여부를 검사하는 직원.
 @Log4j2
 @Service
-//@RequiredArgsConstructor
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
 //    private final MemberRepository memberRepository;
 
     //시스템에 등록된, 암호화 해주는 도구 가져오기.
-    private PasswordEncoder passwordEncoder;
+//    private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private  MemberRepository memberRepository;
+     private final MemberRepository memberRepository;
 
 
     // 시큐리티에서, 로그인 작업 처리시, 동작하는 메서드 여기
@@ -48,10 +47,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     // 화면에 input 태그에서, name 이름 작성시 주의하기.
 
 //    public CustomUserDetailsService(MemberRepository memberRepository) {
-public CustomUserDetailsService() {
+//public CustomUserDetailsService() {
 //        this.memberRepository = memberRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder();
-    }
+//        this.passwordEncoder = new BCryptPasswordEncoder();
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

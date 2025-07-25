@@ -52,9 +52,9 @@ public class CustomSecurityConfig {
 
         // 순서4
         //로그인 후, 성공시 리다이렉트 될 페이지 지정, 간단한 버전.
-//        http.formLogin(formLogin ->
-//                formLogin.defaultSuccessUrl("/board/list",true)
-//        );
+        http.formLogin(formLogin ->
+                formLogin.defaultSuccessUrl("/board/list",true)
+        );
 
         // 순서5
         // 기본은 csrf 설정이 on, 작업시에는 끄고 작업하기.
@@ -69,25 +69,26 @@ public class CustomSecurityConfig {
         // 주의사항, 위에서 부터 차례대로 설정 적용이 됨.
         // 첫번째 줄에 너무 큰 범위로 막는 설정을 하고, 다음 줄에서 허용을해도
         // 허용이 안됩니다.
-//        http.authorizeHttpRequests(
-//                authorizeRequests -> {
-//                    authorizeRequests.requestMatchers
-//                            ("/css/**", "/js/**","/images/**",
-//                                    "/member/login","/member/join", "/board/list",
+        http.authorizeHttpRequests(
+                authorizeRequests -> {
+                    authorizeRequests.requestMatchers
+                            ("/css/**", "/js/**","/images/**",
+                                    "/member/login","/member/join", "/board/list"
 //                                    "http://localhost:8080/login/oauth2/code/kakao",
 //                                    "https://kauth.kakao.com",
-//                                    "https://kapi.kakao.com").permitAll();
-//                    authorizeRequests.requestMatchers
-//                            ("/board/register").authenticated();
-//                    authorizeRequests.requestMatchers
-//                            ("/admin/**","/board/update").hasRole("ADMIN");
-//                    //위의 3가지 조건을 제외한 나머지 모든 접근은 인증이 되어야 접근이 가능함.
-//                    authorizeRequests
-//                            .anyRequest().authenticated();
-////                            .anyRequest().permitAll();
-//                }
-//
-//        );
+//                                    "https://kapi.kakao.com"
+                            ).permitAll();
+                    authorizeRequests.requestMatchers
+                            ("/board/register").authenticated();
+                    authorizeRequests.requestMatchers
+                            ("/admin/**","/board/update").hasRole("ADMIN");
+                    //위의 3가지 조건을 제외한 나머지 모든 접근은 인증이 되어야 접근이 가능함.
+                    authorizeRequests
+                            .anyRequest().authenticated();
+//                            .anyRequest().permitAll();
+                }
+
+        );
 
         // 순서 8, 로그아웃 설정.
         // 로그 아웃 설정.
