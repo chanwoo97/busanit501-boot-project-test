@@ -165,7 +165,7 @@ public class CustomSecurityConfig {
     }
 
 시큐리티 시스템에서 정한 로그 아웃.
-http://localhost:8080/shopMember/login?logout
+http://localhost:8080/logout
 
 3. 자동 로그인을 위한 테이블
 스프링에서 제공하는 테이블명 : persistent_logins , 동일해야함.
