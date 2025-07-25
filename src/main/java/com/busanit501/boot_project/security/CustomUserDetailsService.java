@@ -81,6 +81,9 @@ public CustomUserDetailsService() {
             throw new UsernameNotFoundException("해당 유저가 없습니다. ");
         }
         Member member = result.get();
+        log.info("확인2 loadUserByUsername에서 화면으로부터 입력받은 로그인 정보로 ,디비 조회 확인. member : " + member);
+
+
 
         // MemberSecurityDTO ,사실은 반환 타입 , UserDetails 타입이다,
         // 왜? User 클래스를 상속을 받아서 ,
@@ -95,7 +98,7 @@ public CustomUserDetailsService() {
                 member.getRoleSet().stream().map(memberRole ->
                         new SimpleGrantedAuthority("ROLE_"+memberRole.name())).collect(Collectors.toList())
         );
-
+        log.info("확인 3 loadUserByUsername에서 화면으로부터 입력받은 로그인 정보로 ,디비 조회 확인2. memberSecurityDTO : " + memberSecurityDTO);
 
         return memberSecurityDTO;
     }
