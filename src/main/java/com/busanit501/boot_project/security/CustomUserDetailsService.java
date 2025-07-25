@@ -1,7 +1,10 @@
 package com.busanit501.boot_project.security;
 
+import com.busanit501.boot_project.domain.Member;
+import com.busanit501.boot_project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 // 시큐리티에서는 로그인시, 원하는 포맷 형태가 있음.
 // 시큐리티가 만들어 둔 UserDetails 라는 타입으로 맞춰주기.
@@ -31,6 +35,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     //시스템에 등록된, 암호화 해주는 도구 가져오기.
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private  MemberRepository memberRepository;
 
 
     // 시큐리티에서, 로그인 작업 처리시, 동작하는 메서드 여기
@@ -54,20 +61,39 @@ public CustomUserDetailsService() {
         // 반환 타입 : UserDetails
         // User : 스프링 시큐리티에서 제공하는 클래스, 주의하기, 이름. 고정.
 
-        log.info("passwordEncoder.encode(\"123456\") : " +passwordEncoder.encode("123456"));
-        UserDetails userDetails = User.builder()
-                .username("lsy")
-                // 서버에서는 평문으로 패스워드 넘어오면,
-                // 기본 다 거부함. 기본 해쉬한 값으로 와야함.
-//                .password("1234")
-                .password(passwordEncoder.encode("1234"))
-                // 인증된 유저,
-                // 관리자, ROLE_ADMIN
-                .authorities("ROLE_USER")
-//                .authorities("ROLE_USER", "ROLE_ADMIN")
-                .build();
+        // 연습용, 더미 데이터 ,
+//        log.info("passwordEncoder.encode(\"123456\") : " +passwordEncoder.encode("123456"));
+//        UserDetails userDetails = User.builder()
+//                .username("lsy")
+//                // 서버에서는 평문으로 패스워드 넘어오면,
+//                // 기본 다 거부함. 기본 해쉬한 값으로 와야함.
+////                .password("1234")
+//                .password(passwordEncoder.encode("1234"))
+//                // 인증된 유저,
+//                // 관리자, ROLE_ADMIN
+//                .authorities("ROLE_USER")
+////                .authorities("ROLE_USER", "ROLE_ADMIN")
+//                .build();
+
+        // 실제 데이터베이스에서, 디비 조회 후, 로그인 처리 확인.
+       Optional<Member> result = memberRepository.getWithRoles(username);
+        if(result.isEmpty()){
+            throw new UsernameNotFoundException("해당 유저가 없습니다. ");
+        }
+        Member member = result.get();
+
+        MemberSecurityDTO memberSecurityDTO = new MemberSecurityDTO(
+                member.getMid(),
+                member.getMpw(),
+                member.getEmail(),
+                member.isDel(),
+                false,
+                // 디비에 저장된 USER, ADMIN -> 시큐리티에서 원하는 구조 인 ROLE_USER, ROLE_ADMIN 형태로 변경하기.
+                member.getRoleSet().stream().map(memberRole ->
+                        new SimpleGrantedAuthority("ROLE_"+memberRole.name())).collect(Collectors.toList())
+        );
 
 
-        return userDetails;
+        return memberSecurityDTO;
     }
 }
