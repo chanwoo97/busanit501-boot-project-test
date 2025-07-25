@@ -33,6 +33,7 @@ public class MemberRepositoryTests {
             if (i >=95) {
                 member.addRole(MemberRole.ADMIN);
             }
+            memberRepository.save(member);
         });
     }
 
