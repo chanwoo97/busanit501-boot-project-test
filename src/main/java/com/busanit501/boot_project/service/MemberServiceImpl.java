@@ -1,5 +1,7 @@
 package com.busanit501.boot_project.service;
 
+import com.busanit501.boot_project.domain.Member;
+import com.busanit501.boot_project.domain.MemberRole;
 import com.busanit501.boot_project.dto.MemberJoinDTO;
 import com.busanit501.boot_project.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,15 @@ public class MemberServiceImpl implements MemberService {
         }
 
         // 2. 회원 가입 가능하면, 진행.
+       Member member = modelMapper.map(memberJoinDTO, Member.class);
+        // 화면에서 전달받은 패스워드는 일반 평문 패스워드 -> 암호화 해주기.
+        member.changePassword(passwordEncoder.encode(memberJoinDTO.getMpw()));
+        // 권한 -> 일반 회원 , 관리자,
+        member.addRole(MemberRole.USER);
+        //
+        log.info("멤버 서비스에서, 회원 가입 로직 진행중이고, 변환 된 데이터 확인 member: " + member);
+        memberRepository.save(member);
+
 
     }
 }

@@ -43,7 +43,10 @@
 </div>
 
 <script layout:fragment="script" th:inline="javascript">
-
+    const error = [[${error}]]
+    if(error && error === 'mid') {
+        alert("동일한 mid를 가진 회원이 존재합니다.")
+    }
 </script>
 
 
