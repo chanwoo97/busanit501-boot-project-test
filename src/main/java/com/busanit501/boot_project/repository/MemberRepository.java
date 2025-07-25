@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
-public interface MemberRepository extends JpaRepository<Member,Long> {
+public interface MemberRepository extends JpaRepository<Member,String> {
     // 부모테이블 : Member , 자식테이블 : MemberRole, <-> 1 : N
     // 영속성 컨텍스트의 특성상, 부모 테이블에 속해 있는 자식테이블 조회시,
     // 디비서버에 요청에 각각 매번하게됨. 그러면, 디비 서버 입장에서, 이왕이면,
