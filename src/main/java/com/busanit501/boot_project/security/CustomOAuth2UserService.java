@@ -84,6 +84,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             );
             // 소셜 로그인 정보를 담아둘 맵 객체를 , DTO 에 담아두기.
             memberSecurityDTO.setProps(params);
+            log.info("소셜 로그인시, 이메일이 없는 경우, 디비에서 dto로 변환 작업 결과 ,memberSecurityDTO : "+ memberSecurityDTO);
             return memberSecurityDTO;
 
         }
@@ -95,6 +96,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                     member.getRoleSet().stream().map(memberRole ->
                             new SimpleGrantedAuthority("ROLL_"+memberRole.name())).collect(Collectors.toList())
             );
+            log.info("소셜 로그인시, 이메일이 있는 경우, 디비에서 dto로 변환 작업 결과 ,memberSecurityDTO : "+ memberSecurityDTO);
             return  memberSecurityDTO;
         }
 
