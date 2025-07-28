@@ -14,6 +14,7 @@ https://developers.kakao.com/console/app
 - http://localhost:8080 등록
 
 4 사이드 보안 메뉴
+카카오 로그인 -> 일반 -> 클라이언트 시크릿 메뉴
 -secret 코드 생성 하고
 키 보관
 2Nr92L****************SXp4JzrZu
