@@ -1,5 +1,6 @@
 package com.busanit501.boot_project.security.handler;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,8 +24,13 @@ public class Custom403Handler implements AccessDeniedHandler {
         boolean jsonRequest = contentType.startsWith("application/json");
         log.info("json의 여부 확인: " +jsonRequest);
         // 일반 request ,
-        if(!jsonRequest){
+        if(jsonRequest){
             response.sendRedirect("/member/login?error=ACCESS_DENIED");
+        } else {
+            log.info("Custom403Handler: Access Denied");
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error/403");
+            dispatcher.forward(request,response);
         }
     }
 }
