@@ -53,8 +53,8 @@ public class MemberRepositoryTests {
     @Test
     public void testUpdate() {
         String mid = "lsy3709@kakao.com";
-        String mpw = passwordEncoder.encode("1234");
-        memberRepository.updatePassword(mid, mpw);
+        String mpw = passwordEncoder.encode("123456");
+        memberRepository.updatePassword(mpw, mid);
     }
 
 

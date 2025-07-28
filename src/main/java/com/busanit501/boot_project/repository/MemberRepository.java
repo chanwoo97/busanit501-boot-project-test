@@ -29,6 +29,6 @@ public interface MemberRepository extends JpaRepository<Member,String> {
     // 기능추가, 유저의 패스워드를 변경하는 기능.
     @Modifying
     @Transactional
-    @Query("update Member m set m.mpw =:mpw where m.mid = :mid")
+    @Query("update Member m set m.mpw = :mpw where m.mid = :mid")
     void updatePassword(@Param("mpw") String mpw, @Param("mid") String mid);
 }
