@@ -124,13 +124,13 @@ public class CustomSecurityConfig {
                 });
 
         //카카오 로그인 API 설정
-//        http.oauth2Login(
-//                oauthLogin -> {
-//                    oauthLogin.loginPage("/member/login");
-//                    // 카카오 로그인 후 , 후처리 적용하기.
+        http.oauth2Login(
+                oauthLogin -> {
+                    oauthLogin.loginPage("/member/login");
+                    // 카카오 로그인 후 , 후처리 적용하기.
 //                    oauthLogin.successHandler(authenticationSuccessHandler());
-//                }
-//        );
+                }
+        );
 
 
 
@@ -176,7 +176,7 @@ public class CustomSecurityConfig {
     // 소셜 로그인 후, 후처리 추가, 설정,
 //    @Bean
 //    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-//        return new CustomSocialLoginSuccessHandler(passwordEncoder());
+////        return new CustomSocialLoginSuccessHandler(passwordEncoder());
 //    }
 
 
