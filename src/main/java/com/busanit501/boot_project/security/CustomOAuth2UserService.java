@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Log4j2
@@ -34,8 +35,28 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             log.info("key : "+ key + ", value : " + value);
         });
 
+        String email = null;
+
+        switch (clientName){
+            case "kakao":
+                email = getKakaoEmail(paramMap);
+                break;
+        }
+
         return super.loadUser(userRequest);
     }
+
+    private String getKakaoEmail(Map<String, Object> paramMap) {
+        log.info("================paramMap에서 이메일 정보 가져오기 ========================");
+        Object value = paramMap.get("kakao_account");
+        log.info("value : " + value);
+        LinkedHashMap accountMap = (LinkedHashMap) value;
+        String email = (String) accountMap.get("email");
+        log.info("email : " + email);
+        return email;
+
+    }
+
 }
 // 참고, 전달 받은 정보의 객체 트리 구조,
 // ===========================================
