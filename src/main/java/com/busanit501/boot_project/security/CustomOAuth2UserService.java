@@ -94,7 +94,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             MemberSecurityDTO memberSecurityDTO = new MemberSecurityDTO(
                     member.getMid(), member.getMpw(), member.getEmail(), member.isDel(), member.isSocial(),
                     member.getRoleSet().stream().map(memberRole ->
-                            new SimpleGrantedAuthority("ROLL_"+memberRole.name())).collect(Collectors.toList())
+                            new SimpleGrantedAuthority("ROLE_"+memberRole.name())).collect(Collectors.toList())
             );
             log.info("소셜 로그인시, 이메일이 있는 경우, 디비에서 dto로 변환 작업 결과 ,memberSecurityDTO : "+ memberSecurityDTO);
             return  memberSecurityDTO;
