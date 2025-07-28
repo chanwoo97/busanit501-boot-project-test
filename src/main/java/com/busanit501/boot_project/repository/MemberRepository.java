@@ -3,8 +3,10 @@ package com.busanit501.boot_project.repository;
 import com.busanit501.boot_project.domain.Member;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -23,4 +25,10 @@ public interface MemberRepository extends JpaRepository<Member,String> {
     // 추가로, 소셜 로그인시, 유저 정보를 확인.
     @EntityGraph(attributePaths = "roleSet")
     Optional<Member> findByEmail(String email);
+
+    // 기능추가, 유저의 패스워드를 변경하는 기능.
+    @Modifying
+    @Transactional
+    @Query("update Member m set m.mpw =:mpw where m.mid = :mid")
+    void updatePassword(@Param("mpw") String mpw, @Param("mid") String mid);
 }

@@ -20,7 +20,7 @@ public class Custom403Handler implements AccessDeniedHandler {
         // 서버 -> 화면 전달한 메세지 작성 작업,
         response.setStatus(HttpStatus.FORBIDDEN.value());
         // 요청 정보 확인하기. JSON 인지 여부 확인.
-        String contentType = request.getHeader("Content-Type");
+        String contentType= request.getHeader("Content-Type");
         boolean jsonRequest = contentType.startsWith("application/json");
         log.info("json의 여부 확인: " +jsonRequest);
         // 일반 request ,

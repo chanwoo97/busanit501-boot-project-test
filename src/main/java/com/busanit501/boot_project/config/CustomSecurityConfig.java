@@ -2,6 +2,7 @@ package com.busanit501.boot_project.config;
 
 import com.busanit501.boot_project.security.CustomUserDetailsService;
 import com.busanit501.boot_project.security.handler.Custom403Handler;
+import com.busanit501.boot_project.security.handler.CustomSocialLoginSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -128,7 +129,7 @@ public class CustomSecurityConfig {
                 oauthLogin -> {
                     oauthLogin.loginPage("/member/login");
                     // 카카오 로그인 후 , 후처리 적용하기.
-//                    oauthLogin.successHandler(authenticationSuccessHandler());
+                    oauthLogin.successHandler(authenticationSuccessHandler());
                 }
         );
 
@@ -174,10 +175,10 @@ public class CustomSecurityConfig {
     }
 
     // 소셜 로그인 후, 후처리 추가, 설정,
-//    @Bean
-//    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-////        return new CustomSocialLoginSuccessHandler(passwordEncoder());
-//    }
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler() {
+        return new CustomSocialLoginSuccessHandler(passwordEncoder());
+    }
 
 
 
